@@ -9,18 +9,27 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject gameOverText;
     [SerializeField] private GameObject scoreText;
     [SerializeField] private GameObject livesText;
+    [SerializeField] private GameObject levelText;
 
     private TMP_Text scoreTextMeshPro;
     private TMP_Text livesTextMeshPro;
+    private TMP_Text levelTextMeshPro;
     private bool running = false;
     private bool gameOver = false;
 
     private int score = 0;
+    private int level = 1;
 
     private void Awake()
     {
         GameManager.onGameStateChanged += GameManagerOnGameStateChanged;
         Block.onBlockDestoyed += BlockOnBlockDestroyed;
+        BlockHandler.onLevelIncrease += BlockHandlerOnLevelIncrease;
+    }
+
+    private void BlockHandlerOnLevelIncrease(int obj)
+    {
+        level = obj;
     }
 
     private void BlockOnBlockDestroyed(int obj)
@@ -56,8 +65,10 @@ public class UIManager : MonoBehaviour
     {
         livesTextMeshPro = livesText.GetComponent<TMP_Text>();
         scoreTextMeshPro = scoreText.GetComponent<TMP_Text>();
+        levelTextMeshPro = levelText.GetComponent<TMP_Text>();
         livesTextMeshPro.text = "Lives: " + gameManager.GetLives();
         scoreTextMeshPro.text = "Score: " + score;
+        levelTextMeshPro.text = "Level: " + level;
     }
 
     private void Update()
