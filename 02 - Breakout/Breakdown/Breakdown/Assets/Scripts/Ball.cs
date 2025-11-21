@@ -7,6 +7,7 @@ public class Ball : MonoBehaviour
     [SerializeField] private float speed = 10f; //speed of the ball
     [SerializeField] private Vector2 startDir = new Vector2(2,2); //start direction of the ball
     [SerializeField] private GameObject paddle;
+    [SerializeField] private AudioClip bounce;
     
     private Vector2 direction; //ball direction
 
@@ -52,6 +53,7 @@ public class Ball : MonoBehaviour
     {
         if (collision.gameObject.name == "Paddle")
         {
+            AudioSource.PlayClipAtPoint(bounce, transform.position, 1.0f);
             float relativeX = (this.transform.position.x - paddle.transform.position.x) / (1.4f / 2);
             direction = new Vector2(relativeX, direction.y * -1);
         }

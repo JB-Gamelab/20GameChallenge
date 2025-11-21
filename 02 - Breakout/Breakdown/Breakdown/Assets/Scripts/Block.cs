@@ -1,4 +1,5 @@
 using System;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,14 +7,9 @@ public class Block : MonoBehaviour
 {
     public static event Action<int> onBlockDestoyed;
     [SerializeField] private SpriteRenderer spriteRenderer;
-    private new ParticleSystem particleSystem;
+    [SerializeField] private GameObject particles;
+    [SerializeField] private AudioClip breakSound;
     private int score = 25;
-    private float delay = 1.0f;
-
-    private void Awake()
-    {
-        particleSystem = GetComponent<ParticleSystem>();
-    }
 
     private void Start()
     {
@@ -47,13 +43,10 @@ public class Block : MonoBehaviour
     {
         if (collision.name == "Ball")
         {
-            onBlockDestoyed?.Invoke(score);
-            particleSystem.Play();
-            delay = delay - Time.deltaTime;
-            if (delay <= 0)
-            {
-                Destroy(this.gameObject);
-            }
+            Instantiate(particles, transform.position, quaternion.identity);
+            AudioSource.PlayClipAtPoint(breakSound, transform.position, 1.0f);
+            onBlockDestoyed?.Invoke(score);            
+            Destroy(gameObject);            
         }
     }
 }
