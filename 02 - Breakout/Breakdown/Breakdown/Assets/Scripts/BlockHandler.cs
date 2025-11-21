@@ -11,9 +11,11 @@ public class BlockHandler : MonoBehaviour
     [SerializeField] private Vector2 startPosition; // First grid position
     [SerializeField] private bool[, ] blockPos; // Booolean array, tells block to spawn in grid position
     [SerializeField] private GameObject blockPrefab;
-    private bool notRunning;
+    private bool notRunning = true;
+    private bool running = false;
     private int level = 1;
     private int noBlocks = 0;
+    private bool spawnComplete = false;
 
     private void Awake()
     {
@@ -31,8 +33,8 @@ public class BlockHandler : MonoBehaviour
     {
         if (state == GameState.Running && notRunning)
         {
-            SpawnBlocks();
-            notRunning = false;          
+            notRunning = false;
+            running = true;    
         }
         if (state == GameState.NotRunning)
         {
@@ -46,7 +48,21 @@ public class BlockHandler : MonoBehaviour
         if (noBlocks < 1)
         {
             level++;
+            spawnComplete = false;
+            Array.Clear(blockPos, 0, blockPos.Length);         
             onLevelIncrease?.Invoke(level);
+        }
+    }
+
+    private void Start()
+    {
+        blockPos = new bool[rows, columns];      
+    }
+
+    private void Update()
+    {
+        if (!spawnComplete && running)
+        {
             if (level == 1)
             {
                 Level1();
@@ -64,14 +80,8 @@ public class BlockHandler : MonoBehaviour
                 Level4();
             }
             SpawnBlocks();
+            
         }
-    }
-
-        private void Start()
-    {
-        blockPos = new bool[rows, columns];
-        Level1();
-        Debug.Log(blockPos[0,0]);      
     }
 
     private void Level1()
@@ -81,9 +91,10 @@ public class BlockHandler : MonoBehaviour
             for (int col = 0; col < columns; col++)
             {
                 blockPos[row, col] = true;
-                noBlocks = noBlocks++;
+                noBlocks++;
             }            
         }
+        
     }
 
     private void Level2()
@@ -95,7 +106,7 @@ public class BlockHandler : MonoBehaviour
                 if (col%2 == 0)
                 {
                     blockPos[row, col] = true;
-                    noBlocks = noBlocks++;
+                    noBlocks++;
                 }                
             }            
         }
@@ -110,7 +121,7 @@ public class BlockHandler : MonoBehaviour
                 if ((row%2 == 0 && col%2 != 0) || (row%2 != 0 && col%2 == 0))
                 {
                     blockPos[row, col] = true;
-                    noBlocks = noBlocks++;
+                    noBlocks++;
                 }
             }            
         }
@@ -125,7 +136,7 @@ public class BlockHandler : MonoBehaviour
                 if (row%2 == 0)
                 {
                     blockPos[row, col] = true;
-                    noBlocks = noBlocks++;
+                    noBlocks++;
                 }  
             }            
         }
@@ -144,5 +155,6 @@ public class BlockHandler : MonoBehaviour
                 }
             }            
         }
+        spawnComplete = true;
     }
 }

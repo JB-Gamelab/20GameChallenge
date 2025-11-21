@@ -1356,11 +1356,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d27374a6350eb14e99db1fbc4f2d98f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  columns: 11
-  rows: 10
+  columns: 3
+  rows: 5
   spaceX: 1
   spaceY: 0.3
-  startPosition: {x: -5, y: 0}
+  startPosition: {x: -1, y: 0}
   blockPrefab: {fileID: 4723506534843391104, guid: 45b095e85f4bda04a8464ce42e7a7f52, type: 3}
 --- !u!1 &1653035280
 GameObject:

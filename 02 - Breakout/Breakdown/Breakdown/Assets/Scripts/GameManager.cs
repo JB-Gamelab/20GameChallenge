@@ -22,8 +22,8 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         inputActions = new Controls();
-        UpdateGameState(GameState.NotRunning);
         BlockHandler.onLevelIncrease += BlockHandlerOnLevelIncrease;
+        UpdateGameState(GameState.NotRunning);
     }
 
     private void BlockHandlerOnLevelIncrease(int obj)

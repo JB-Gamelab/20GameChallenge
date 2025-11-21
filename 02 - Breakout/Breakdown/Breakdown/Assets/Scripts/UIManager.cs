@@ -29,7 +29,8 @@ public class UIManager : MonoBehaviour
 
     private void BlockHandlerOnLevelIncrease(int obj)
     {
-        level = obj;
+        level++;
+        levelTextMeshPro.text = "Level: " + level;
     }
 
     private void BlockOnBlockDestroyed(int obj)
@@ -54,6 +55,7 @@ public class UIManager : MonoBehaviour
         {
             running = false;
             gameOver = true;
+            level = 1;
         }
         if (state == GameState.LifeLost)
         {
