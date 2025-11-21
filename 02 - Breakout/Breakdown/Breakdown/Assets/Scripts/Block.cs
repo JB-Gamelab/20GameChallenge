@@ -1,13 +1,19 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class Block : MonoBehaviour
 {
     public static event Action<int> onBlockDestoyed;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    private new ParticleSystem particleSystem;
     private int score = 25;
+    private float delay = 1.0f;
+
+    private void Awake()
+    {
+        particleSystem = GetComponent<ParticleSystem>();
+    }
 
     private void Start()
     {
@@ -42,7 +48,12 @@ public class Block : MonoBehaviour
         if (collision.name == "Ball")
         {
             onBlockDestoyed?.Invoke(score);
-            Destroy(this.gameObject);
+            particleSystem.Play();
+            delay = delay - Time.deltaTime;
+            if (delay <= 0)
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 }
