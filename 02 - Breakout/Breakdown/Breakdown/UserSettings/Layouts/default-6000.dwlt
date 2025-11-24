@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 989
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Project
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 371}
   m_MaxSize: {x: 10000, y: 10000}
@@ -243,8 +243,8 @@ MonoBehaviour:
     y: 0
     width: 1214
     height: 658
-  m_MinSize: {x: 52, y: 76}
-  m_MaxSize: {x: 4002, y: 4026}
+  m_MinSize: {x: 50, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 14}
@@ -349,7 +349,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: e25ef6ff7ecdf6ff54cff6ff5ef4f6fff0faffff9cb40000
+      m_ExpandedIDs: 5462ffff6662ffff1a65ffff02fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1231,7 +1231,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Sounds
+    - Assets/Scripts
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1241,16 +1241,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Sounds
+  - Assets/Scripts
   m_LastFoldersGridSize: 16
   m_LastProjectPath: D:\Game Dev\20GameChallenge\02 - Breakout\Breakdown\Breakdown
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 74dc0000
-    m_LastClickedID: 56436
-    m_ExpandedIDs: 0000000002b6000000ca9a3b
+    m_SelectedIDs: 96b60000
+    m_LastClickedID: 46742
+    m_ExpandedIDs: 0000000020b6000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1279,7 +1279,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000002b60000
+    m_ExpandedIDs: 0000000020b60000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1311,18 +1311,18 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: 56e70000e6e50000fa470000488b000032e60000f233080096d1000000900000d28f00001a900000ca7a000000000000c6bd000018bb0000e4bc0000d8bc0000e6dd000010df00004ebd0000b8040000b6040000fec000006ad800007cbd00009abd000094150100841501009c15010006c80000a0cd0000c4cf0000f899010000d8000076f9fdffdccc000064ce0000cac60000c4c600004cc60000e8cf000046d600000e460100044701002e4801003c44010016e0000094df0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: PlayerPrefsManager
+      m_OriginalName: PlayerPrefsManager
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 46756
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_TrimLeadingAndTrailingWhitespace: 0
       m_ClientGUIView: {fileID: 11}
@@ -1359,9 +1359,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 736
+    y: 737
     width: 1508
-    height: 250
+    height: 249
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -2560,7 +2560,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 53890
+  m_LastSelectedObjectID: -2430
 --- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
