@@ -6,11 +6,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed = 5f;
     [SerializeField] private float maxXPos = 8f;
     [SerializeField] private float yPos = -3.6f;
+    [SerializeField] private BulletManager bulletManager;
+    [SerializeField] private GameObject bulletSpawnPoint;
     private Vector2 move;
 
     private void OnMove(InputValue val)
     {
         move = val.Get<Vector2>();
+    }
+
+    private void OnFire()
+    {
+        bulletManager.PlayerFire(bulletSpawnPoint.transform);
     }
 
     private void Update()
