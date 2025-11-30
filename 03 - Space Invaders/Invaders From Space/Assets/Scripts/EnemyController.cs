@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 
-public class CollisionHandler : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
-    public static event Action onEnemyDestroyed;
+    public static event Action<Transform> onEnemyDestroyed;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         
@@ -11,10 +11,9 @@ public class CollisionHandler : MonoBehaviour
         {
             BulletMovement bullet = collision.gameObject.GetComponent<BulletMovement>();
             if (bullet.GetWhoFired() == 1)
-            {
-                
-                Destroy(gameObject);   
-                onEnemyDestroyed?.Invoke();
+            {                   
+                onEnemyDestroyed?.Invoke(transform);
+                gameObject.SetActive(false);
             }            
         }
     }

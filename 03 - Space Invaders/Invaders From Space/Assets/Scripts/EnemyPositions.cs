@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 public class EnemyPositions : MonoBehaviour
@@ -11,16 +12,20 @@ public class EnemyPositions : MonoBehaviour
     public List<int> enemyCanShootList;
     public int dictionaryLength;
 
+    public float leftMostX = 3;
+    public float rightMostX = -3;
+
     
-    public float[] CalculateEnemyPositions(float leftMostX, float rightMostX) //Figure out the left and right most enemy sprites for movement
+    public void CalculateEnemyPositions(List<Transform> enemyTransform) //Figure out the left and right most enemy sprites for movement
     {
-        float[] leftRightX = new float[2];
-
-        for (int i = 0; i < enemyGroup.transform.childCount; i++)
+        leftMostX = 3;
+        rightMostX = -3;
+        
+        for (int i = 0; i < enemyTransform.Count; i++)
         {
-            Transform enemy = enemyGroup.transform.GetChild(i);
+            if (!enemyTransform[i].gameObject.activeSelf) continue;
 
-            if (!enemy || !enemy.gameObject) continue;
+            Transform enemy = enemyTransform[i].transform;
             
             float x = enemy.localPosition.x;
 
@@ -44,15 +49,9 @@ public class EnemyPositions : MonoBehaviour
                 {
                     lowestPerColumn[columnKey] = enemy;
                 }
-            }
-            
+            }            
         }
 
-        enemyCanShootList = new List<int>(lowestPerColumn.Keys); //Adds dictionary entries to a list
-        
-        leftRightX[0] = leftMostX;
-        leftRightX[1] = rightMostX;
-        
-        return leftRightX;
+        enemyCanShootList = new List<int>(lowestPerColumn.Keys); //Adds dictionary entries to a list  
     }
 }
