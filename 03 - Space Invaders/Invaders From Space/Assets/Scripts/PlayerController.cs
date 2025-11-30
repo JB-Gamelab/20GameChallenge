@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +9,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float yPos = -3.6f;
     [SerializeField] private BulletManager bulletManager;
     [SerializeField] private GameObject bulletSpawnPoint;
+    [SerializeField] private GameObject bulletPrefab;
     private Vector2 move;
+
+    private bool bulletExists = false;
+
+    private void Awake()
+    {
+        BulletMovement.onBulletDestroyed += BulletMovementOnBulletDestroyed;
+    }
+
+    private void BulletMovementOnBulletDestroyed(bool obj)
+    {
+        bulletExists = false;
+    }
 
     private void OnMove(InputValue val)
     {
@@ -17,7 +31,14 @@ public class PlayerController : MonoBehaviour
 
     private void OnFire()
     {
-        bulletManager.PlayerFire(bulletSpawnPoint.transform);
+        //bulletManager.PlayerFire(bulletSpawnPoint.transform);
+        if (!bulletExists)
+        {
+            GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.transform.position, Quaternion.identity);
+            BulletMovement bulletInstance = bullet.GetComponent<BulletMovement>();
+            bulletInstance.owner = this;
+            bulletExists = true;
+        }
     }
 
     private void Update()
@@ -33,6 +54,14 @@ public class PlayerController : MonoBehaviour
         if (transform.position.x > maxXPos)
         {
             transform.position = new Vector2(maxXPos, yPos);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Bullet" || collision.gameObject.tag == "Enemy")
+        {
+            Destroy(gameObject);
         }
     }
 }

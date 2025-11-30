@@ -1,33 +1,59 @@
+using System;
 using UnityEngine;
 
 public class BulletMovement : MonoBehaviour
 {
+    public static event Action<bool> onBulletDestroyed;
     [SerializeField] float speed = 5f;
 
-    private bool up;
+    public MonoBehaviour owner;
+    private bool playersBullet = false;
 
     private void Start()
     {
-        if (transform.position.y <= -3f)
+        SpriteRenderer bulletSprite = GetComponent<SpriteRenderer>();
+
+        if (owner is PlayerController)
         {
-            up = true;
+            bulletSprite.color = Color.greenYellow;
+            playersBullet = true;
         }
-        else
+        if (owner is EnemyFire)
         {
-            up = false;
+            bulletSprite.color = Color.orange;
         }
     }
 
     private void Update()
     {
-        if (up)
+        if (owner is PlayerController)
         {
-            transform.position += Time.deltaTime * new Vector3(0, speed, 0);
+            transform.position += Time.deltaTime * Vector3.up * speed;
         }
-        else
+        if (owner is EnemyFire)
         {
-            transform.position -= Time.deltaTime * new Vector3(0, speed, 0);
+            transform.position += Time.deltaTime * Vector3.down * speed;
         }
     }
 
+    public int GetWhoFired()
+    {
+        if (owner is PlayerController)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (owner is PlayerController && collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Player" || collision.gameObject.tag == "Border")
+        {
+            onBulletDestroyed?.Invoke(playersBullet);
+            Destroy(gameObject);            
+        }        
+    }
 }

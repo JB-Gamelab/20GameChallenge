@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
@@ -9,13 +10,28 @@ public class EnemyMovement : MonoBehaviour
     private bool dropNext = false; //Sets next move action down
 
     private float moveDelay = 0;
-    private float leftMostX = 0; //X position of leftmost enemy sprite
-    private float rightMostX = 0; //X position of rightmost enemy sprite
+    private float startLeftMostX = 8;
+    private float startRightMostX = -8;
+    private float leftMostX; //X position of leftmost enemy sprite
+    private float rightMostX; //X position of rightmost enemy sprite
+
+    private void Awake()
+    {
+        CollisionHandler.onEnemyDestroyed += CollisionHandlerOnEnemyDestroyed;
+    }
+
+    private void CollisionHandlerOnEnemyDestroyed()
+    {
+        leftMostX = enemyPositions.CalculateEnemyPositions(startLeftMostX, startRightMostX)[0];
+        rightMostX = enemyPositions.CalculateEnemyPositions(startLeftMostX, startRightMostX)[1];
+        Debug.Log(leftMostX + " " + rightMostX);
+    }
 
     private void Start()
     {
-        leftMostX = enemyPositions.CalculateEnemyPositions(leftMostX, rightMostX)[0];
-        rightMostX = enemyPositions.CalculateEnemyPositions(leftMostX, rightMostX)[1];
+        leftMostX = enemyPositions.CalculateEnemyPositions(startLeftMostX, startRightMostX)[0];
+        rightMostX = enemyPositions.CalculateEnemyPositions(startLeftMostX, startRightMostX)[1];
+        Debug.Log(leftMostX + " " + rightMostX);
     }
 
     private void Update()
