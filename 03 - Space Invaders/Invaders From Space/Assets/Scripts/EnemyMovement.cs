@@ -3,40 +3,29 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    [SerializeField] private float moveInterval = 5f; //Time between move actions
+    [SerializeField] private float moveMod = 5f;
     [SerializeField] private float maxXPos = 8f; //Sets max +/- X position for enemy movement
     [SerializeField] private EnemyPositions enemyPositions;
+
     private bool movingRight = true; //Sets the move direction
     private bool dropNext = false; //Sets next move action down
 
     private float moveDelay = 0;
-    private float startLeftMostX = 8;
-    private float startRightMostX = -8;
     private float leftMostX; //X position of leftmost enemy sprite
     private float rightMostX; //X position of rightmost enemy sprite
+    private float moveInterval;
 
-    public void Awake()
+    private void Awake()
     {
-        CollisionHandler.onEnemyDestroyed += CollisionHandlerOnEnemyDestroyed;
-    }
-
-    private void CollisionHandlerOnEnemyDestroyed()
-    {
-        enemyPositions.lowestPerColumn.Clear();
-        enemyPositions.enemyCanShootList.Clear();
-        leftMostX = enemyPositions.CalculateEnemyPositions(startLeftMostX, startRightMostX)[0];
-        rightMostX = enemyPositions.CalculateEnemyPositions(startLeftMostX, startRightMostX)[1];
-    }
-
-    private void Start()
-    {
-        leftMostX = enemyPositions.CalculateEnemyPositions(startLeftMostX, startRightMostX)[0];
-        rightMostX = enemyPositions.CalculateEnemyPositions(startLeftMostX, startRightMostX)[1];
+        EnemyManager.onEnemyCountChanged += EnemyManagerOnEnemyCountChanged;
     }
 
     private void Update()
     {
         moveDelay = moveDelay + Time.deltaTime;
+
+        leftMostX = enemyPositions.leftMostX;
+        rightMostX = enemyPositions.rightMostX;
 
         if (moveDelay > moveInterval)
         {
@@ -62,9 +51,7 @@ public class EnemyMovement : MonoBehaviour
             {
                 transform.position = new Vector2(transform.position.x - 1, transform.position.y);
             }
-            leftMostX = enemyPositions.CalculateEnemyPositions(startLeftMostX, startRightMostX)[0];
-            rightMostX = enemyPositions.CalculateEnemyPositions(startLeftMostX, startRightMostX)[1];
-            Debug.Log(leftMostX + " " + rightMostX);
+            
             CheckNextAction();
         }
         
@@ -84,5 +71,9 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    
+    private void EnemyManagerOnEnemyCountChanged(int enemyCount)
+    {
+        moveInterval = enemyCount / moveMod;
+        Debug.Log(moveInterval);
+    }    
 }
