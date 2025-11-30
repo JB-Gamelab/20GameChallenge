@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
     [SerializeField] private float maxXPos = 8f;
-    [SerializeField] private float yPos = -3.6f;
+    [SerializeField] private float yPos = -4f;
     [SerializeField] private BulletManager bulletManager;
     [SerializeField] private GameObject bulletSpawnPoint;
     [SerializeField] private GameObject bulletPrefab;

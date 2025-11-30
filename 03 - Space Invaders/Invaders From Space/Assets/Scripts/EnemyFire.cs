@@ -16,18 +16,21 @@ public class EnemyFire : MonoBehaviour
         fireDelay = fireDelay + Time.deltaTime;
         if (fireDelay >= fireRate)
         {
-            int randomEnemy = Random.Range(0, enemyPositions.enemyCanShootList.Count); //pick random number from total number of enemies in list
-            int listRandom = enemyPositions.enemyCanShootList[randomEnemy]; //grab the index of the random number
-            Transform enemy = enemyPositions.lowestPerColumn[listRandom];
-            //bulletManager.EnemyFire(bulletSpawnPoint);
-            if (enemy != null)
+            if (enemyPositions.enemyCanShootList.Count > 0)
             {
-                bulletSpawnPoint = enemy.GetChild(1); //pull the data from the index in the dictionary
-                GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.transform.position, Quaternion.identity);
-                BulletMovement bulletInstance = bullet.GetComponent<BulletMovement>();
-                bulletInstance.owner = this;            
+                int randomEnemy = Random.Range(0, enemyPositions.enemyCanShootList.Count); //pick random number from total number of enemies in list
+                int listRandom = enemyPositions.enemyCanShootList[randomEnemy]; //grab the index of the random number
+                Transform enemy = enemyPositions.lowestPerColumn[listRandom];
+                //bulletManager.EnemyFire(bulletSpawnPoint);
+                if (enemy != null)
+                {
+                    bulletSpawnPoint = enemy.GetChild(1); //pull the data from the index in the dictionary
+                    GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.transform.position, Quaternion.identity);
+                    BulletMovement bulletInstance = bullet.GetComponent<BulletMovement>();
+                    bulletInstance.owner = this;            
+                }
+                fireDelay = 0;
             }
-            fireDelay = 0;
         }
     }
 }

@@ -11,6 +11,7 @@ public class EnemyPositions : MonoBehaviour
     public List<int> enemyCanShootList;
     public int dictionaryLength;
 
+    
     public float[] CalculateEnemyPositions(float leftMostX, float rightMostX) //Figure out the left and right most enemy sprites for movement
     {
         float[] leftRightX = new float[2];

@@ -15,23 +15,23 @@ public class EnemyMovement : MonoBehaviour
     private float leftMostX; //X position of leftmost enemy sprite
     private float rightMostX; //X position of rightmost enemy sprite
 
-    private void Awake()
+    public void Awake()
     {
         CollisionHandler.onEnemyDestroyed += CollisionHandlerOnEnemyDestroyed;
     }
 
     private void CollisionHandlerOnEnemyDestroyed()
     {
+        enemyPositions.lowestPerColumn.Clear();
+        enemyPositions.enemyCanShootList.Clear();
         leftMostX = enemyPositions.CalculateEnemyPositions(startLeftMostX, startRightMostX)[0];
         rightMostX = enemyPositions.CalculateEnemyPositions(startLeftMostX, startRightMostX)[1];
-        Debug.Log(leftMostX + " " + rightMostX);
     }
 
     private void Start()
     {
         leftMostX = enemyPositions.CalculateEnemyPositions(startLeftMostX, startRightMostX)[0];
         rightMostX = enemyPositions.CalculateEnemyPositions(startLeftMostX, startRightMostX)[1];
-        Debug.Log(leftMostX + " " + rightMostX);
     }
 
     private void Update()
@@ -62,6 +62,9 @@ public class EnemyMovement : MonoBehaviour
             {
                 transform.position = new Vector2(transform.position.x - 1, transform.position.y);
             }
+            leftMostX = enemyPositions.CalculateEnemyPositions(startLeftMostX, startRightMostX)[0];
+            rightMostX = enemyPositions.CalculateEnemyPositions(startLeftMostX, startRightMostX)[1];
+            Debug.Log(leftMostX + " " + rightMostX);
             CheckNextAction();
         }
         
