@@ -6,10 +6,10 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
     [SerializeField] private float maxXPos = 8f;
-    [SerializeField] private float yPos = -4f;
     [SerializeField] private BulletManager bulletManager;
     [SerializeField] private GameObject bulletSpawnPoint;
     [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private GameManager gameManager;
     private Vector2 move;
 
     private bool bulletExists = false;
@@ -49,11 +49,11 @@ public class PlayerController : MonoBehaviour
         }
         if (transform.position.x < maxXPos * -1)
         {
-            transform.position = new Vector2(maxXPos * -1, yPos);
+            transform.position = new Vector2(maxXPos * -1, transform.position.y);
         }
         if (transform.position.x > maxXPos)
         {
-            transform.position = new Vector2(maxXPos, yPos);
+            transform.position = new Vector2(maxXPos, transform.position.y);
         }
     }
 
@@ -61,7 +61,8 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Bullet" || collision.gameObject.tag == "Enemy")
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+            gameManager.UpdateGameState(GameManager.GameState.LifeLost);
         }
     }
 }

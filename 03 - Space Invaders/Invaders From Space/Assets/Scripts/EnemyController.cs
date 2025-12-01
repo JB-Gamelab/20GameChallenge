@@ -4,6 +4,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     public static event Action<Transform> onEnemyDestroyed;
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         

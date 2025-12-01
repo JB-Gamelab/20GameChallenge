@@ -74,6 +74,5 @@ public class EnemyMovement : MonoBehaviour
     private void EnemyManagerOnEnemyCountChanged(int enemyCount)
     {
         moveInterval = enemyCount / moveMod;
-        Debug.Log(moveInterval);
     }    
 }

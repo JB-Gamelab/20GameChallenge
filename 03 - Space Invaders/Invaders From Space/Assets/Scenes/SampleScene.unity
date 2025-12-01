@@ -287,6 +287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPositions: {fileID: 1022351995}
+  gameManager: {fileID: 1660582285}
   enemyList: []
 --- !u!1001 &342289152
 PrefabInstance:
@@ -1893,10 +1894,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   maxXPos: 8
-  yPos: -3.6
   bulletManager: {fileID: 600567569}
   bulletSpawnPoint: {fileID: 1983562628}
   bulletPrefab: {fileID: 5257632726390090281, guid: 6c84e143b49135e44907b52c49ef8478, type: 3}
+  gameManager: {fileID: 1660582285}
 --- !u!4 &1413061567
 Transform:
   m_ObjectHideFlags: 0
@@ -2233,6 +2234,56 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7831977669546248822, guid: 32a7252138be8cb4888f73c776c03b32, type: 3}
   m_PrefabInstance: {fileID: 1619493140}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1660582284
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1660582286}
+  - component: {fileID: 1660582285}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1660582285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660582284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99587856a196fa1438ca9c4214ba212d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 1413061566}
+  enemyGroup: {fileID: 315540290}
+  respawnDelay: 5
+  levelLoadDelay: 3
+  lives: 3
+  currentState: 0
+--- !u!4 &1660582286
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660582284}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1721008687
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2777,3 +2828,4 @@ SceneRoots:
   - {fileID: 600567570}
   - {fileID: 1063607363}
   - {fileID: 749910237}
+  - {fileID: 1660582286}
