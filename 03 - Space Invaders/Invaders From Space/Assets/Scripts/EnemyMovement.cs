@@ -7,6 +7,8 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float maxXPos = 8f; //Sets max +/- X position for enemy movement
     [SerializeField] private EnemyPositions enemyPositions;
 
+    public static event Action onMoveAction;
+
     private bool movingRight = true; //Sets the move direction
     private bool dropNext = false; //Sets next move action down
 
@@ -18,6 +20,11 @@ public class EnemyMovement : MonoBehaviour
     private void Awake()
     {
         EnemyManager.onEnemyCountChanged += EnemyManagerOnEnemyCountChanged;
+    }
+
+    private void OnDestroy()
+    {
+        EnemyManager.onEnemyCountChanged -= EnemyManagerOnEnemyCountChanged;
     }
 
     private void Update()
@@ -54,7 +61,7 @@ public class EnemyMovement : MonoBehaviour
             
             CheckNextAction();
         }
-        
+        onMoveAction?.Invoke();
     }
 
     private void CheckNextAction()

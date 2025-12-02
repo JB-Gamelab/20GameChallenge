@@ -19,6 +19,11 @@ public class PlayerController : MonoBehaviour
         BulletMovement.onBulletDestroyed += BulletMovementOnBulletDestroyed;
     }
 
+    private void OnDestroy()
+    {
+        BulletMovement.onBulletDestroyed -= BulletMovementOnBulletDestroyed;
+    }
+
     private void BulletMovementOnBulletDestroyed(bool obj)
     {
         bulletExists = false;

@@ -17,6 +17,11 @@ public class EnemyManager : MonoBehaviour
     {
         EnemyController.onEnemyDestroyed += EnemyControllerOnEnemyDestroyed;
     }
+    
+    private void OnDestroy()
+    {
+        EnemyController.onEnemyDestroyed -= EnemyControllerOnEnemyDestroyed;
+    }
 
     private void Start()
     {

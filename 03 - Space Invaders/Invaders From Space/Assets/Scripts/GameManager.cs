@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float levelLoadDelay = 3f;
 
     public int lives = 3;
+    public int level = 1;
 
     private float delay;
 
@@ -115,6 +116,7 @@ public class GameManager : MonoBehaviour
         }
         
         UpdateGameState(GameState.Running);
+        level++;
     }
 
     public enum GameState
