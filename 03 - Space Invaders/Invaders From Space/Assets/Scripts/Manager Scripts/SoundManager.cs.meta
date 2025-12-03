@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: fe3b5fc7a28ca1646a505ca81cf01bc1
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - enemyFire: {instanceID: 0}
+  - playerFire: {instanceID: 0}
+  - enemyDie: {instanceID: 0}
+  - playerDie: {instanceID: 0}
+  - gameOver: {instanceID: 0}
+  - music: {instanceID: 0}
+  - musicSource: {instanceID: 0}
+  - sFXSource: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
