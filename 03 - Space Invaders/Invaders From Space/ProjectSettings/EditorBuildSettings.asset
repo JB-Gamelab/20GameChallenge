@@ -15,11 +15,14 @@ EditorBuildSettings:
     path: Assets/Scenes/MainGameScene.unity
     guid: 6a3ed0ac04f797f4b95551c97c83d836
   - enabled: 1
-    path: Assets/Scenes/HighScoreScene.unity
+    path: Assets/Scenes/HighScoresScene.unity
+    guid: 9631af7d667c24a41a00809639c6e5c9
+  - enabled: 0
+    path: Assets/Scenes/CreditsScene.unity
     guid: 4e38edfd0ae3dca439a85344821b79de
   - enabled: 1
     path: Assets/Scenes/CreditsScene.unity
-    guid: ca0019d50349ba44287c6d4249a04d89
+    guid: 4e38edfd0ae3dca439a85344821b79de
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

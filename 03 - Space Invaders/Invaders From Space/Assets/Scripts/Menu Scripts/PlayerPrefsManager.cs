@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class PlayerPrefsManager
@@ -32,5 +33,54 @@ public static class PlayerPrefsManager
         {
             return 0;
         }
+    }
+
+    public static void SetLastGameScore(int score)
+    {
+        PlayerPrefs.SetInt("LastScore", score);
+    }
+
+    public static int GetLastGameScore()
+    {
+        if (PlayerPrefs.HasKey("LastScore"))
+        {
+            int score = PlayerPrefs.GetInt("LastScore");
+            return score;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public static void SetHighScores(List<ScoreCard> scoreCards)
+    {
+        for (int i = 0; i < scoreCards.Count; i++)
+        {
+            PlayerPrefs.SetString("BestInitial" + i, scoreCards[i].intials);
+            PlayerPrefs.SetInt("BestScore" + i, scoreCards[i].score);
+        }
+    }
+
+    public static List<ScoreCard> GetHighScores()
+    {
+        List<ScoreCard> highScores = new List<ScoreCard>();
+        ScoreCard scoreCard = new ScoreCard();
+
+        for (int i = 0; i < 5; i++)
+        {
+            if (PlayerPrefs.HasKey("BestInitial" + i))
+            {
+                scoreCard.intials = PlayerPrefs.GetString("BestInitial" + i);
+                scoreCard.score = PlayerPrefs.GetInt("BestScore" + i);
+            }
+            else
+            {
+                scoreCard.intials = "AAA";
+                scoreCard.score = 0;
+            }
+            highScores.Add(scoreCard);
+        }
+        return highScores;
     }
 }

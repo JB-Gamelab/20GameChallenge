@@ -45,7 +45,8 @@ public class SoundManager : MonoBehaviour
 
     private void GameManagerOnGameOver()
     {
-        sFXSource.PlayOneShot(gameOver);
+        musicSource.Stop();
+        sFXSource.PlayOneShot(gameOver);        
     }
 
     private void EnemyFireOnEnemyFire()

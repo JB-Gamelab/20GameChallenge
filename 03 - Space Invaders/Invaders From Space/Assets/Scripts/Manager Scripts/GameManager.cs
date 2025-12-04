@@ -1,7 +1,10 @@
 using System;
 using Unity.Collections;
+using UnityEditor.Build.Reporting;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +15,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject enemyGroup;
     [SerializeField] private float respawnDelay = 1f;
     [SerializeField] private float levelLoadDelay = 3f;
+    private ScoreManager scoreManager;
 
     public int lives = 3;
     public int level = 1;
@@ -23,6 +27,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        scoreManager = GetComponent<ScoreManager>();
         UpdateGameState(GameState.Running);
     }
 
@@ -85,8 +90,8 @@ public class GameManager : MonoBehaviour
 
             case GameState.Gameover:
                 onGameOver?.Invoke();
-                // Save score
-                // Load high score table scene
+                PlayerPrefsManager.SetLastGameScore(scoreManager.score);
+                SceneManager.LoadScene(2);
                 Time.timeScale = 0f;
                 return;
         }
