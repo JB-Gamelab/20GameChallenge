@@ -1845,10 +1845,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 576f021cd96f99d4ca3633f44cbce59f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startButton: {fileID: 373367709}
-  highButton: {fileID: 1269349922}
-  scoresButton: {fileID: 602329379}
-  creditsButton: {fileID: 1961967331}
   musicVolume: {fileID: 188290708}
   sFXVolume: {fileID: 800299012}
 --- !u!1 &1529889420

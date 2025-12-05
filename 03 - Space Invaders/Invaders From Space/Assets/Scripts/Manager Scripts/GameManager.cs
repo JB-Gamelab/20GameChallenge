@@ -1,9 +1,5 @@
 using System;
-using Unity.Collections;
-using UnityEditor.Build.Reporting;
-using UnityEditor.SearchService;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
