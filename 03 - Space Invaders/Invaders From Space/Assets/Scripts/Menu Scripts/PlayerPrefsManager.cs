@@ -57,7 +57,7 @@ public static class PlayerPrefsManager
     {
         for (int i = 0; i < scoreCards.Count; i++)
         {
-            PlayerPrefs.SetString("BestInitial" + i, scoreCards[i].intials);
+            PlayerPrefs.SetString("BestInitial" + i, scoreCards[i].initials);
             PlayerPrefs.SetInt("BestScore" + i, scoreCards[i].score);
         }
     }
@@ -65,18 +65,19 @@ public static class PlayerPrefsManager
     public static List<ScoreCard> GetHighScores()
     {
         List<ScoreCard> highScores = new List<ScoreCard>();
-        ScoreCard scoreCard = new ScoreCard();
+        
 
         for (int i = 0; i < 5; i++)
         {
+            ScoreCard scoreCard = new ScoreCard();
             if (PlayerPrefs.HasKey("BestInitial" + i))
             {
-                scoreCard.intials = PlayerPrefs.GetString("BestInitial" + i);
+                scoreCard.initials = PlayerPrefs.GetString("BestInitial" + i);
                 scoreCard.score = PlayerPrefs.GetInt("BestScore" + i);
             }
             else
             {
-                scoreCard.intials = "AAA";
+                scoreCard.initials = "AAA";
                 scoreCard.score = 0;
             }
             highScores.Add(scoreCard);

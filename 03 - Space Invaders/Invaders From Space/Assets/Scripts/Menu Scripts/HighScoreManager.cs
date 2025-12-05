@@ -45,7 +45,7 @@ public class HighScoreManager : MonoBehaviour
     public void OnEndEdit()
     {
         highScoreList[4].score = lastGameScore;
-        highScoreList[4].intials = intialInput.text;
+        highScoreList[4].initials = intialInput.text;
         ReOrderTable();
         UpdateTable();
         PlayerPrefsManager.SetHighScores(highScoreList);
@@ -55,7 +55,7 @@ public class HighScoreManager : MonoBehaviour
     private void ReOrderTable()
     {
         ScoreCard tempScoreCard;
-        for (int i = 4; i < 0; i--)
+        for (int i = 4; i > 0; i--)
         {
             if (highScoreList[i].score <= highScoreList[i-1].score)
             {
@@ -72,11 +72,11 @@ public class HighScoreManager : MonoBehaviour
 
     private void UpdateTable()
     {
-        initial1.text = highScoreList[0].intials;
-        initial2.text = highScoreList[1].intials;
-        initial3.text = highScoreList[2].intials;
-        initial4.text = highScoreList[3].intials;
-        initial5.text = highScoreList[4].intials;
+        initial1.text = highScoreList[0].initials;
+        initial2.text = highScoreList[1].initials;
+        initial3.text = highScoreList[2].initials;
+        initial4.text = highScoreList[3].initials;
+        initial5.text = highScoreList[4].initials;
         score1.text = "" + highScoreList[0].score;
         score2.text = "" + highScoreList[1].score;
         score3.text = "" + highScoreList[2].score;

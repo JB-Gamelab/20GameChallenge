@@ -2,6 +2,6 @@ using UnityEngine;
 
 public class ScoreCard
 {
-    public string intials;
+    public string initials;
     public int score;
 }
