@@ -8,6 +8,8 @@ public class BulletController : MonoBehaviour
     private Rigidbody2D rb2D;
     [SerializeField] private float lifetime = 5;
     private float startTime = 0;
+    private bool leftScreen;
+
     
     private void Awake()
     {
@@ -16,7 +18,11 @@ public class BulletController : MonoBehaviour
         rb2D = GetComponent<Rigidbody2D>();
     }
 
-    private bool leftScreen;
+    private void OnEnable()
+    {
+        startTime = 0;
+    }
+
 
     private void Update()
     {
