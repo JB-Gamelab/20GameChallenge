@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,7 +8,6 @@ public class BulletController : MonoBehaviour
     private WrapController wrapController;
     private Rigidbody2D rb2D;
     [SerializeField] private float lifetime = 5;
-    private float startTime = 0;
     private bool leftScreen;
 
     
@@ -20,22 +20,14 @@ public class BulletController : MonoBehaviour
 
     private void OnEnable()
     {
-        startTime = 0;
+        StartCoroutine(BulletLifetime());
     }
 
 
     private void Update()
     {
         leftScreen = wrapController.CheckPosition(transform.position);
-
-        if (startTime > lifetime)
-        {
-            BulletDestroy();
-        }
-        else
-        {
-            startTime = startTime + Time.deltaTime;
-        }
+        BulletLifetime();
     }
 
     private void LateUpdate()
@@ -43,6 +35,20 @@ public class BulletController : MonoBehaviour
         if (leftScreen)
         {
             transform.position = wrapController.WarpPosition(transform.position);
+        }
+    }
+
+    private IEnumerator BulletLifetime()
+    {
+        yield return new WaitForSeconds(lifetime);
+        BulletDestroy();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "LargeAsteroid" || collision.gameObject.tag == "MediumAsteroid" || collision.gameObject.tag == "SmallAsteroid")
+        {
+            BulletDestroy();
         }
     }
 

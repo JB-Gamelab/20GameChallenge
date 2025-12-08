@@ -119,6 +119,55 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &375771551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 375771553}
+  - component: {fileID: 375771552}
+  m_Layer: 0
+  m_Name: AsteroidManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &375771552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375771551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f0d0cb5874d33d43b23d7cc96052ce8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolManager: {fileID: 1767468975}
+  maxLargeAsteroids: 5
+  largeAsteroidMinSpeed: 0.1
+  largeAsteroidMaxSpeed: 1
+  spawnTimer: 3
+--- !u!4 &375771553
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375771551}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,6 +428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolManager: {fileID: 1767468975}
   bulletSpawn: {fileID: 1408045656}
+  bulletSpeed: 0.8
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -905,7 +955,7 @@ GameObject:
   - component: {fileID: 1767468976}
   - component: {fileID: 1767468975}
   m_Layer: 0
-  m_Name: BulletPoolManager
+  m_Name: PoolManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -923,8 +973,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c46307596d6ea894f9ea1e66fb2e492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfBullets: 20
+  numberOfBullets: 30
+  numberOfLargeAsteroids: 5
+  numberOfMediumAsteroids: 10
+  numberOfSmallAsteroids: 20
   bulletPrefab: {fileID: 4252372958459802103, guid: 3f74d2a90c8d59a4984724268e23270f, type: 3}
+  largeAsteroidPrefab: {fileID: 5581243929746207958, guid: 8b34ea357db766d47944b1e8802c76bb, type: 3}
+  mediumAsteroidPrefab: {fileID: 7875544576241336072, guid: b96495b9e3e490742be2a47c04f9868d, type: 3}
+  smallAsteroidPrefab: {fileID: 610202969733505817, guid: d0ae5f95ae2fb624ead77951ef57f725, type: 3}
 --- !u!4 &1767468976
 Transform:
   m_ObjectHideFlags: 0
@@ -952,3 +1008,4 @@ SceneRoots:
   - {fileID: 579759479}
   - {fileID: 766346022}
   - {fileID: 1767468976}
+  - {fileID: 375771553}

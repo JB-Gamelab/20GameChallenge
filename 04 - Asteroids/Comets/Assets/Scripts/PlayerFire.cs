@@ -7,7 +7,14 @@ public class PlayerFire : MonoBehaviour
 
     [SerializeField] private GameObject bulletSpawn;
 
-    private float bulletSpeed = 20f;
+    [SerializeField] private float bulletSpeed = 2f;
+
+    private Rigidbody2D playerRB;
+
+    private void Awake()
+    {
+        playerRB = GetComponent<Rigidbody2D>();
+    }
 
     private void OnFire()
     {
@@ -24,6 +31,6 @@ public class PlayerFire : MonoBehaviour
         bulletRB = bullet.GetComponent<Rigidbody2D>();
         bulletRB.linearVelocity = Vector2.zero;
         bullet.SetActive(true);
-        bulletRB.AddForce(bulletSpawn.transform.up * bulletSpeed);
+        bulletRB.AddForce(bulletSpawn.transform.up * bulletSpeed, ForceMode2D.Impulse);
     }
 }
