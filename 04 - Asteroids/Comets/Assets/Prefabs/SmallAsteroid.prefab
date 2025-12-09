@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 87787614988618506}
   - component: {fileID: 1640331270642870382}
   - component: {fileID: 3618939951742146784}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SmallAsteroid
-  m_TagString: SmallAsteroid
+  m_TagString: Asteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,6 +110,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb5b1dbb343b8d640bc9ff4c10e31c3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  asteroidType: 2
+  spawnPointA: {fileID: 0}
+  spawnPointB: {fileID: 0}
 --- !u!1 &4919055526261645134
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,7 +123,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2560760801203069608}
   - component: {fileID: 5556310443632171306}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MediumAsteroidSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -9,6 +9,10 @@ public class AsteroidManager : MonoBehaviour
     [SerializeField] int maxLargeAsteroids = 5;
     [SerializeField] float largeAsteroidMinSpeed = 0.1f;
     [SerializeField] float largeAsteroidMaxSpeed = 1.0f;
+    [SerializeField] float mediumAsteroidMinSpeed = 0.2f;
+    [SerializeField] float mediumAsteroidMaxSpeed = 1.3f;
+    [SerializeField] float smallAsteroidMinSpeed = 0.4f;
+    [SerializeField] float smallAsteroidMaxSpeed = 1.5f;
     [SerializeField] float spawnTimer = 3.0f;
 
     private List<GameObject> activeLargeAsteroids;
@@ -18,13 +22,21 @@ public class AsteroidManager : MonoBehaviour
         AsteroidController.onAsteroidDestroyed += AsteroidControllerOnAsteroidDestroyed;
     }
 
-    private void AsteroidControllerOnAsteroidDestroyed(GameObject @object)
+    private void AsteroidControllerOnAsteroidDestroyed(int asteroidType, GameObject asteroid, GameObject spawnA, GameObject spawnB)
     {
-        activeLargeAsteroids.Remove(@object);
-        @object.SetActive(false);
-        if (activeLargeAsteroids.Count < maxLargeAsteroids)
+        if (asteroidType == 1)
         {
-            StartCoroutine(AsteroidSpawnTimer());
+            SpawnMediumAsteroid(asteroid, spawnA, spawnB);        
+        }
+
+        if (asteroidType == 2)
+        {
+            SpawnSmallAsteroid(asteroid, spawnA, spawnB);        
+        }
+
+        if (asteroidType == 3)
+        {
+            asteroid.SetActive(false);        
         }
     }
 
@@ -65,6 +77,83 @@ public class AsteroidManager : MonoBehaviour
         {
             StartCoroutine(AsteroidSpawnTimer());
         }
+    }
+
+    private void SpawnMediumAsteroid(GameObject currentAsteroid, GameObject spawnPointA, GameObject spawnPointB)
+    {
+        GameObject mediumAsteroid1;     
+        Rigidbody2D mediumAsteroidRB1;
+        float mediumAsteroidSpeed1 = UnityEngine.Random.Range(mediumAsteroidMinSpeed, mediumAsteroidMaxSpeed);
+        GameObject mediumAsteroid2;     
+        Rigidbody2D mediumAsteroidRB2;
+        float mediumAsteroidSpeed2 = UnityEngine.Random.Range(mediumAsteroidMinSpeed, mediumAsteroidMaxSpeed);
+
+        mediumAsteroid1 = poolManager.FindFreeMediumAsteroid();        
+
+        if (mediumAsteroid1 == null)
+            return;
+
+        mediumAsteroid1.transform.position = spawnPointA.transform.position;
+        mediumAsteroidRB1 = mediumAsteroid1.GetComponent<Rigidbody2D>();
+        mediumAsteroidRB1.linearVelocity = Vector2.zero;
+        mediumAsteroid1.SetActive(true);
+
+        mediumAsteroid2 = poolManager.FindFreeMediumAsteroid();
+
+        if (mediumAsteroid2 == null)
+            return;
+            
+        mediumAsteroid2.transform.position = spawnPointB.transform.position;
+        mediumAsteroidRB2 = mediumAsteroid2.GetComponent<Rigidbody2D>();
+        mediumAsteroidRB2.linearVelocity = Vector2.zero;
+        mediumAsteroid2.SetActive(true);
+
+        activeLargeAsteroids.Remove(currentAsteroid);
+        currentAsteroid.SetActive(false);     
+        
+        mediumAsteroidRB1.AddForce(spawnPointA.transform.up * mediumAsteroidSpeed1, ForceMode2D.Impulse);   
+        mediumAsteroidRB2.AddForce(spawnPointB.transform.up * mediumAsteroidSpeed2, ForceMode2D.Impulse);
+
+        if (activeLargeAsteroids.Count < maxLargeAsteroids)
+        {
+            StartCoroutine(AsteroidSpawnTimer());
+        }
+    }
+
+    private void SpawnSmallAsteroid(GameObject currentAsteroid, GameObject spawnPointA, GameObject spawnPointB)
+    {
+        GameObject smallAsteroid1;     
+        Rigidbody2D smallAsteroidRB1;
+        float smallAsteroidSpeed1 = UnityEngine.Random.Range(smallAsteroidMinSpeed, smallAsteroidMaxSpeed);
+        GameObject smallAsteroid2;     
+        Rigidbody2D smallAsteroidRB2;
+        float smallAsteroidSpeed2 = UnityEngine.Random.Range(smallAsteroidMinSpeed, smallAsteroidMaxSpeed);
+
+        smallAsteroid1 = poolManager.FindFreeSmallAsteroid();        
+
+        if (smallAsteroid1 == null)
+            return;
+
+        smallAsteroid1.transform.position = spawnPointA.transform.position;
+        smallAsteroidRB1 = smallAsteroid1.GetComponent<Rigidbody2D>();
+        smallAsteroidRB1.linearVelocity = Vector2.zero;
+        smallAsteroid1.SetActive(true);
+
+        smallAsteroid2 = poolManager.FindFreeSmallAsteroid();
+
+        if (smallAsteroid2 == null)
+            return;
+            
+        smallAsteroid2.transform.position = spawnPointB.transform.position;
+        smallAsteroidRB2 = smallAsteroid2.GetComponent<Rigidbody2D>();
+        smallAsteroidRB2.linearVelocity = Vector2.zero;
+        smallAsteroid2.SetActive(true);
+
+        activeLargeAsteroids.Remove(currentAsteroid);
+        currentAsteroid.SetActive(false);     
+        
+        smallAsteroidRB1.AddForce(spawnPointA.transform.up * smallAsteroidSpeed1, ForceMode2D.Impulse);   
+        smallAsteroidRB2.AddForce(spawnPointB.transform.up * smallAsteroidSpeed2, ForceMode2D.Impulse);
     }
 
     private float GetRotationAngle()

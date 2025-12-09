@@ -46,7 +46,7 @@ public class BulletController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "LargeAsteroid" || collision.gameObject.tag == "MediumAsteroid" || collision.gameObject.tag == "SmallAsteroid")
+        if (collision.gameObject.tag == "Asteroid")
         {
             BulletDestroy();
         }

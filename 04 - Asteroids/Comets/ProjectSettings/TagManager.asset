@@ -5,9 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - Bullet
+  - Asteroid
   - LargeAsteroid
-  - MediumAsteroid
-  - SmallAsteroid
   layers:
   - Default
   - TransparentFX
@@ -15,7 +14,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Asteroids
   - 
   - 
   - 
