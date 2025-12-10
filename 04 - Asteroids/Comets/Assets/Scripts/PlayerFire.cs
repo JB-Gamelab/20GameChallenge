@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerFire : MonoBehaviour
 {
@@ -16,21 +17,24 @@ public class PlayerFire : MonoBehaviour
         playerRB = GetComponent<Rigidbody2D>();
     }
 
-    private void OnFire()
+    public void OnFire(InputAction.CallbackContext context)
     {
-        GameObject bullet;     
-        Rigidbody2D bulletRB;
+        if (context.performed)
+        {
+            GameObject bullet;     
+            Rigidbody2D bulletRB;
 
-        bullet = poolManager.FindFreeBullet();
+            bullet = poolManager.FindFreeBullet();
 
-        if (bullet == null)
-            return;
+            if (bullet == null)
+                return;
             
-        bullet.transform.position = bulletSpawn.transform.position;
-        bullet.transform.rotation = bulletSpawn.transform.rotation;
-        bulletRB = bullet.GetComponent<Rigidbody2D>();
-        bulletRB.linearVelocity = Vector2.zero;
-        bullet.SetActive(true);
-        bulletRB.AddForce(bulletSpawn.transform.up * bulletSpeed, ForceMode2D.Impulse);
+            bullet.transform.position = bulletSpawn.transform.position;
+            bullet.transform.rotation = bulletSpawn.transform.rotation;
+            bulletRB = bullet.GetComponent<Rigidbody2D>();
+            bulletRB.linearVelocity = Vector2.zero;
+            bullet.SetActive(true);
+            bulletRB.AddForce(bulletSpawn.transform.up * bulletSpeed, ForceMode2D.Impulse);
+        }
     }
 }

@@ -92,15 +92,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             ""id"": ""df70fa95-8a34-4494-b137-73ab6b9c7d37"",
             ""actions"": [
                 {
-                    ""name"": ""Thrust"",
-                    ""type"": ""Button"",
-                    ""id"": ""83145560-d835-467f-a363-3e50f2ec8737"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""RotateAntiClockwise"",
                     ""type"": ""Button"",
                     ""id"": ""9fb48118-7687-4ad8-bf8f-053a4657af16"",
@@ -126,31 +117,18 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Thrust"",
+                    ""type"": ""Button"",
+                    ""id"": ""b35d59f4-345c-4c37-b088-67a3cdfd74c3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""822a7bd9-4bf8-4618-826b-65b473c0b7d8"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Thrust"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""02ceb818-47e9-4f2b-a6da-921683ccfb96"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Thrust"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""2e7acc4a-f2e4-422e-b2dc-63ba48807dba"",
@@ -203,6 +181,28 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c259ad06-bc23-4e00-947c-45996cc3840e"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Thrust"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2ddcc13f-6542-47ba-b22c-e5893dc95eb0"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Thrust"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -790,10 +790,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
 }");
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_Thrust = m_Player.FindAction("Thrust", throwIfNotFound: true);
         m_Player_RotateAntiClockwise = m_Player.FindAction("RotateAntiClockwise", throwIfNotFound: true);
         m_Player_RotateClockwise = m_Player.FindAction("RotateClockwise", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
+        m_Player_Thrust = m_Player.FindAction("Thrust", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -887,10 +887,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     // Player
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_Player_Thrust;
     private readonly InputAction m_Player_RotateAntiClockwise;
     private readonly InputAction m_Player_RotateClockwise;
     private readonly InputAction m_Player_Fire;
+    private readonly InputAction m_Player_Thrust;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -903,10 +903,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public PlayerActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Player/Thrust".
-        /// </summary>
-        public InputAction @Thrust => m_Wrapper.m_Player_Thrust;
-        /// <summary>
         /// Provides access to the underlying input action "Player/RotateAntiClockwise".
         /// </summary>
         public InputAction @RotateAntiClockwise => m_Wrapper.m_Player_RotateAntiClockwise;
@@ -918,6 +914,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Fire".
         /// </summary>
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Thrust".
+        /// </summary>
+        public InputAction @Thrust => m_Wrapper.m_Player_Thrust;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -944,9 +944,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
-            @Thrust.started += instance.OnThrust;
-            @Thrust.performed += instance.OnThrust;
-            @Thrust.canceled += instance.OnThrust;
             @RotateAntiClockwise.started += instance.OnRotateAntiClockwise;
             @RotateAntiClockwise.performed += instance.OnRotateAntiClockwise;
             @RotateAntiClockwise.canceled += instance.OnRotateAntiClockwise;
@@ -956,6 +953,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Fire.started += instance.OnFire;
             @Fire.performed += instance.OnFire;
             @Fire.canceled += instance.OnFire;
+            @Thrust.started += instance.OnThrust;
+            @Thrust.performed += instance.OnThrust;
+            @Thrust.canceled += instance.OnThrust;
         }
 
         /// <summary>
@@ -967,9 +967,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="PlayerActions" />
         private void UnregisterCallbacks(IPlayerActions instance)
         {
-            @Thrust.started -= instance.OnThrust;
-            @Thrust.performed -= instance.OnThrust;
-            @Thrust.canceled -= instance.OnThrust;
             @RotateAntiClockwise.started -= instance.OnRotateAntiClockwise;
             @RotateAntiClockwise.performed -= instance.OnRotateAntiClockwise;
             @RotateAntiClockwise.canceled -= instance.OnRotateAntiClockwise;
@@ -979,6 +976,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Fire.started -= instance.OnFire;
             @Fire.performed -= instance.OnFire;
             @Fire.canceled -= instance.OnFire;
+            @Thrust.started -= instance.OnThrust;
+            @Thrust.performed -= instance.OnThrust;
+            @Thrust.canceled -= instance.OnThrust;
         }
 
         /// <summary>
@@ -1280,13 +1280,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         /// <summary>
-        /// Method invoked when associated input action "Thrust" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnThrust(InputAction.CallbackContext context);
-        /// <summary>
         /// Method invoked when associated input action "RotateAntiClockwise" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
@@ -1307,6 +1300,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnFire(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Thrust" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnThrust(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float thrust = 5f;
     [SerializeField] private float rotateSpeed = 5f;
     [SerializeField] private WrapController wrapController;
+    [SerializeField] private SpriteRenderer thrustSprite;
+    [SerializeField] private SpriteRenderer leftSideThrust;
+    [SerializeField] private SpriteRenderer rightSideThrust;
     
     private Rigidbody2D rB2D;
 
@@ -15,6 +17,9 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         rB2D = GetComponent<Rigidbody2D>();
+        thrustSprite.gameObject.SetActive(false);
+        leftSideThrust.gameObject.SetActive(false);
+        rightSideThrust.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -30,18 +35,42 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnThrust()
+    public void OnThrust(InputAction.CallbackContext context)
     {
-        rB2D.AddForce(transform.up * thrust);
+        if (context.performed)
+        {
+            rB2D.AddForce(transform.up * thrust);
+            thrustSprite.gameObject.SetActive(true);
+        }
+        if (context.canceled)
+        {
+            thrustSprite.gameObject.SetActive(false);
+        }
     }
 
-    private void OnRotateAntiClockwise()
+    public void OnRotateAntiClockwise(InputAction.CallbackContext context)
     {
-        rB2D.angularVelocity += rotateSpeed;
+        if (context.performed)
+        {
+            rB2D.angularVelocity += rotateSpeed;
+            rightSideThrust.gameObject.SetActive(true);
+        }
+        if (context.canceled)
+        {
+            rightSideThrust.gameObject.SetActive(false);
+        }
     }
 
-    private void OnRotateClockwise()
+    public void OnRotateClockwise(InputAction.CallbackContext context)
     {
-        rB2D.angularVelocity -= rotateSpeed;
+        if (context.performed)
+        {
+            rB2D.angularVelocity -= rotateSpeed;
+            leftSideThrust.gameObject.SetActive(true);
+        }
+        if (context.canceled)
+        {
+            leftSideThrust.gameObject.SetActive(false);
+        }
     }
 }

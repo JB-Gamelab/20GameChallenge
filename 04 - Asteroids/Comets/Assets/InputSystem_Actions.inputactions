@@ -6,15 +6,6 @@
             "id": "df70fa95-8a34-4494-b137-73ab6b9c7d37",
             "actions": [
                 {
-                    "name": "Thrust",
-                    "type": "Button",
-                    "id": "83145560-d835-467f-a363-3e50f2ec8737",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "RotateAntiClockwise",
                     "type": "Button",
                     "id": "9fb48118-7687-4ad8-bf8f-053a4657af16",
@@ -40,31 +31,18 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Thrust",
+                    "type": "Button",
+                    "id": "b35d59f4-345c-4c37-b088-67a3cdfd74c3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "822a7bd9-4bf8-4618-826b-65b473c0b7d8",
-                    "path": "<Keyboard>/upArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Thrust",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "02ceb818-47e9-4f2b-a6da-921683ccfb96",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Thrust",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "2e7acc4a-f2e4-422e-b2dc-63ba48807dba",
@@ -117,6 +95,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c259ad06-bc23-4e00-947c-45996cc3840e",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Thrust",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2ddcc13f-6542-47ba-b22c-e5893dc95eb0",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Thrust",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
