@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerFire : MonoBehaviour
 {
+    public static event Action onPlayerFire;
+
     [SerializeField] PoolManager poolManager;
 
     [SerializeField] private GameObject bulletSpawn;
@@ -36,5 +38,6 @@ public class PlayerFire : MonoBehaviour
             bullet.SetActive(true);
             bulletRB.AddForce(bulletSpawn.transform.up * bulletSpeed, ForceMode2D.Impulse);
         }
+        onPlayerFire?.Invoke();
     }
 }

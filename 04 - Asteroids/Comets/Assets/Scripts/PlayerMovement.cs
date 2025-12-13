@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static event Action onPlayerThrust;
+
     [SerializeField] private float thrust = 5f;
     [SerializeField] private float rotateSpeed = 5f;
     [SerializeField] private WrapController wrapController;
@@ -46,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
         {
             thrustSprite.gameObject.SetActive(false);
         }
+        onPlayerThrust?.Invoke();
     }
 
     public void OnRotateAntiClockwise(InputAction.CallbackContext context)

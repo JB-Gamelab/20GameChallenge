@@ -22,6 +22,11 @@ public class AsteroidManager : MonoBehaviour
         AsteroidController.onAsteroidDestroyed += AsteroidControllerOnAsteroidDestroyed;
     }
 
+    private void OnDestroy()
+    {
+        AsteroidController.onAsteroidDestroyed -= AsteroidControllerOnAsteroidDestroyed;
+    }
+
     private void AsteroidControllerOnAsteroidDestroyed(int asteroidType, GameObject asteroid, GameObject spawnA, GameObject spawnB)
     {
         if (asteroidType == 1)
@@ -68,6 +73,7 @@ public class AsteroidManager : MonoBehaviour
      
         largeAsteroidRB = largeAsteroid.GetComponent<Rigidbody2D>();
         largeAsteroidRB.linearVelocity = Vector2.zero;
+        largeAsteroidRB.angularVelocity = 0;
         largeAsteroid.SetActive(true);
         largeAsteroidSpeed = Random.Range(largeAsteroidMinSpeed, largeAsteroidMaxSpeed);
         largeAsteroidRB.AddForce(largeAsteroid.transform.up * largeAsteroidSpeed, ForceMode2D.Impulse);
@@ -96,6 +102,7 @@ public class AsteroidManager : MonoBehaviour
         mediumAsteroid1.transform.position = spawnPointA.transform.position;
         mediumAsteroidRB1 = mediumAsteroid1.GetComponent<Rigidbody2D>();
         mediumAsteroidRB1.linearVelocity = Vector2.zero;
+        mediumAsteroidRB1.angularVelocity = 0;
         mediumAsteroid1.SetActive(true);
 
         mediumAsteroid2 = poolManager.FindFreeMediumAsteroid();
@@ -106,6 +113,7 @@ public class AsteroidManager : MonoBehaviour
         mediumAsteroid2.transform.position = spawnPointB.transform.position;
         mediumAsteroidRB2 = mediumAsteroid2.GetComponent<Rigidbody2D>();
         mediumAsteroidRB2.linearVelocity = Vector2.zero;
+        mediumAsteroidRB2.angularVelocity = 0;
         mediumAsteroid2.SetActive(true);
 
         activeLargeAsteroids.Remove(currentAsteroid);
@@ -137,6 +145,7 @@ public class AsteroidManager : MonoBehaviour
         smallAsteroid1.transform.position = spawnPointA.transform.position;
         smallAsteroidRB1 = smallAsteroid1.GetComponent<Rigidbody2D>();
         smallAsteroidRB1.linearVelocity = Vector2.zero;
+        smallAsteroidRB1.angularVelocity = 0;
         smallAsteroid1.SetActive(true);
 
         smallAsteroid2 = poolManager.FindFreeSmallAsteroid();
@@ -147,6 +156,7 @@ public class AsteroidManager : MonoBehaviour
         smallAsteroid2.transform.position = spawnPointB.transform.position;
         smallAsteroidRB2 = smallAsteroid2.GetComponent<Rigidbody2D>();
         smallAsteroidRB2.linearVelocity = Vector2.zero;
+        smallAsteroidRB2.angularVelocity = 0;
         smallAsteroid2.SetActive(true);
 
         activeLargeAsteroids.Remove(currentAsteroid);
