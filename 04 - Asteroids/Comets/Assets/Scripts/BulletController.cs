@@ -27,7 +27,6 @@ public class BulletController : MonoBehaviour
     private void Update()
     {
         leftScreen = wrapController.CheckPosition(transform.position);
-        BulletLifetime();
     }
 
     private void LateUpdate()

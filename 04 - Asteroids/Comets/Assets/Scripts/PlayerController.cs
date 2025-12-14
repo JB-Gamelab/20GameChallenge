@@ -1,15 +1,31 @@
 using System;
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     public static event Action onPlayerDeath;
 
+    [SerializeField] private float invulTimer = 4;
+    [SerializeField] private float flashTimer = 0.5f;
+    [SerializeField] private GameObject playerSprite; 
+
     private Rigidbody2D rB2D;
+    private CapsuleCollider2D capCollider2D;
+    private SpriteRenderer spriteRend;
 
     private void Awake()
     {
         rB2D = GetComponent<Rigidbody2D>();
+        capCollider2D = GetComponent<CapsuleCollider2D>();
+        spriteRend = playerSprite.GetComponent<SpriteRenderer>();
+        GameManager.onRespawn += GameManagerOnRespawn;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.onRespawn -= GameManagerOnRespawn;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -21,5 +37,33 @@ public class PlayerController : MonoBehaviour
             rB2D.angularVelocity = 0;
             gameObject.SetActive(false);
         }
+    }
+
+    private void GameManagerOnRespawn()
+    {
+        StartCoroutine(RespawnInvulTimer());
+    }
+
+    private IEnumerator RespawnInvulTimer()
+    {
+        capCollider2D.enabled = false;
+        float timer = 0;
+
+        while (timer < invulTimer)
+        {
+            timer += Time.deltaTime;
+            yield return new WaitForSeconds(flashTimer);
+            if (spriteRend.enabled)
+            {
+                spriteRend.enabled = false;
+            }
+            else
+            {
+                spriteRend.enabled = true;
+            }
+        }
+        
+        spriteRend.enabled = true;
+        capCollider2D.enabled = true;
     }
 }

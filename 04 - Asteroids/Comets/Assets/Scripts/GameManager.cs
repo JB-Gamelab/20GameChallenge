@@ -1,18 +1,24 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public static event Action onGameOver;
+    public static event Action<int> onLifeLost;
+    public static event Action onRespawn;
+    public static event Action<bool> onPause;
 
     [SerializeField] private PlayerController playerController;
-    [SerializeField] private float respawnDelay = 1f;
+    [SerializeField] private float respawnDelay = 5f;
 
     public int lives = 3;
 
     public GameState currentState;
+    private bool pauseState;
 
     private void Awake()
     {
@@ -57,12 +63,17 @@ public class GameManager : MonoBehaviour
                 onGameOver?.Invoke();
                 Time.timeScale = 0f;
                 return;
+
+            case GameState.Paused:
+                Time.timeScale = 0f;
+                return;
         }
     }
 
     private int LoseLife()
     {
         lives--;
+        onLifeLost?.Invoke(lives);
         return lives;
     }
 
@@ -70,6 +81,8 @@ public class GameManager : MonoBehaviour
     {
         playerController.gameObject.transform.position = new Vector2(0, 0);
         playerController.gameObject.SetActive(true);
+
+        onRespawn?.Invoke();
         
         UpdateGameState(GameState.Running);
     }
@@ -79,12 +92,33 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(respawnDelay);
         Respawn();
     }
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            
+            if (currentState == GameState.Running)
+            {
+                UpdateGameState(GameState.Paused);
+                pauseState = true;
+            }
+            else if (currentState == GameState.Paused)
+            {
+                UpdateGameState(GameState.Running);
+                pauseState = false;
+            }
+
+            onPause?.Invoke(pauseState);
+        }
+    }
     
     public enum GameState
     {
         Running,
         LifeLost,
-        Gameover
+        Gameover,
+        Paused
     }
 
 }

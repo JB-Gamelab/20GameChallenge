@@ -23,6 +23,18 @@ public class PoolManager : MonoBehaviour
     private GameObject freeMediumAsteroid;
     private GameObject freeSmallAsteroid;
 
+    private void Awake()
+    {
+        PlayerController.onPlayerDeath += PlayerControllerOnPlayerDeath;
+        GameManager.onPause += GameManagerOnPause;
+    }
+
+    private void OnDestroy()
+    {
+        PlayerController.onPlayerDeath -= PlayerControllerOnPlayerDeath;
+        GameManager.onPause -= GameManagerOnPause;
+    }
+
     private void Start()
     {
         bulletList = new List<GameObject>();
@@ -104,5 +116,36 @@ public class PoolManager : MonoBehaviour
             }
         }       
         return freeSmallAsteroid;        
+    }
+
+    public void PlayerControllerOnPlayerDeath()
+    {
+        // Deactivates any active bullets on death
+        for (int i = 0; i < bulletList.Count; i++)
+        {
+            if (bulletList[i].activeSelf)
+            {
+                bulletList[i].gameObject.SetActive(false);
+            }
+        } 
+    }
+
+    private void GameManagerOnPause(bool isPaused)
+    {
+        PauseMotion(bulletList, isPaused);
+        PauseMotion(largeAsteroidList, isPaused);
+        PauseMotion(mediumAsteroidList, isPaused);
+        PauseMotion(smallAsteroidList, isPaused);
+    }
+
+    private void PauseMotion(List<GameObject> objectList, bool isPaused)
+    {
+        for (int i = 0; i < objectList.Count; i++)
+        {
+            if (objectList[i].activeSelf)
+            {
+                objectList[i].GetComponent<Rigidbody2D>().simulated = !isPaused;
+            }
+        }
     }
 }

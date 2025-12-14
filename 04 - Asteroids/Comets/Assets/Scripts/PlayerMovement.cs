@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rB2D;
 
     private bool leftScreen;
+    private bool pauseState = false;
 
     private void Awake()
     {
@@ -23,6 +24,12 @@ public class PlayerMovement : MonoBehaviour
         thrustSprite.gameObject.SetActive(false);
         leftSideThrust.gameObject.SetActive(false);
         rightSideThrust.gameObject.SetActive(false);
+        GameManager.onPause += GameManagerOnPause;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.onPause -= GameManagerOnPause;
     }
 
     private void Update()
@@ -40,41 +47,55 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnThrust(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if(!pauseState)
         {
-            rB2D.AddForce(transform.up * thrust);
-            thrustSprite.gameObject.SetActive(true);
+            if (context.performed)
+            {
+                rB2D.AddForce(transform.up * thrust);
+                thrustSprite.gameObject.SetActive(true);
+            }
+            if (context.canceled)
+            {
+                thrustSprite.gameObject.SetActive(false);
+            }
+            onPlayerThrust?.Invoke();
         }
-        if (context.canceled)
-        {
-            thrustSprite.gameObject.SetActive(false);
-        }
-        onPlayerThrust?.Invoke();
     }
 
     public void OnRotateAntiClockwise(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if(!pauseState)
         {
-            rB2D.angularVelocity += rotateSpeed;
-            rightSideThrust.gameObject.SetActive(true);
-        }
-        if (context.canceled)
-        {
-            rightSideThrust.gameObject.SetActive(false);
+            if (context.performed)
+            {
+                rB2D.angularVelocity += rotateSpeed;
+                rightSideThrust.gameObject.SetActive(true);
+            }
+            if (context.canceled)
+            {
+                rightSideThrust.gameObject.SetActive(false);
+            }
         }
     }
 
     public void OnRotateClockwise(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (!pauseState)
         {
-            rB2D.angularVelocity -= rotateSpeed;
-            leftSideThrust.gameObject.SetActive(true);
+            if (context.performed)
+            {
+                rB2D.angularVelocity -= rotateSpeed;
+                leftSideThrust.gameObject.SetActive(true);
+            }
+            if (context.canceled)
+            {
+                leftSideThrust.gameObject.SetActive(false);
+            }
         }
-        if (context.canceled)
-        {
-            leftSideThrust.gameObject.SetActive(false);
-        }
+    }
+
+    private void GameManagerOnPause(bool isPaused)
+    {
+        pauseState = isPaused;
     }
 }
