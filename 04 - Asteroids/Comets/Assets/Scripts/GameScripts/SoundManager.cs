@@ -13,8 +13,10 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioSource sFXSource;
 
-    //private float musicVolume;
-    //private float sFXVolume;
+    [SerializeField] private UIController uIController;
+
+    private float musicVolume;
+    private float sFXVolume;
 
     private void Awake()
     {
@@ -23,8 +25,8 @@ public class SoundManager : MonoBehaviour
         PlayerFire.onPlayerFire += PlayerFireOnPlayerFire;
         PlayerController.onPlayerDeath += PlayerControllerOnPlayerDeath;
         GameManager.onGameOver += GameManagerOnGameOver;
-        //musicVolume = PlayerPrefsManager.GetMusicVolume();
-        //sFXVolume = PlayerPrefsManager.GetSFXVolume();        
+        musicVolume = PlayerPrefsManager.GetMusicVolume();
+        sFXVolume = PlayerPrefsManager.GetSFXVolume();        
     }
 
     private void OnDestroy()
@@ -37,8 +39,8 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
-        //musicSource.volume = musicVolume;
-        //sFXSource.volume = sFXVolume;
+        musicSource.volume = musicVolume;
+        sFXSource.volume = sFXVolume;
         musicSource.clip = music;
         musicSource.Play();
     }
@@ -67,5 +69,15 @@ public class SoundManager : MonoBehaviour
     {
         sFXSource.PlayOneShot(gameOver);
         musicSource.Pause();
+    }
+
+    public void OnMusicVolumeSliderChange()
+    {
+        musicSource.volume = uIController.GetMusicVolume();
+    }
+
+    public void OnSFXVolumeSliderChange()
+    {
+        sFXSource.volume = uIController.GetSFXVolume();
     }
 }

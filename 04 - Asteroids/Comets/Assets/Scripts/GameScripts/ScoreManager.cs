@@ -34,4 +34,9 @@ public class ScoreManager : MonoBehaviour
         }
         onScoreChanged?.Invoke(score);
     }
+
+    public int GetScore()
+    {
+        return score;
+    }
 }

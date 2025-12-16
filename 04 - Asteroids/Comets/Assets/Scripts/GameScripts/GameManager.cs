@@ -3,6 +3,7 @@ using System.Collections;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,10 +20,12 @@ public class GameManager : MonoBehaviour
 
     public GameState currentState;
     private bool pauseState;
+    private ScoreManager scoreManager;
 
     private void Awake()
     {
         instance = this;
+        scoreManager = GetComponent<ScoreManager>();
         UpdateGameState(GameState.Running);
         PlayerController.onPlayerDeath += PlayerControllerOnPlayerDeath;
     }
@@ -62,6 +65,8 @@ public class GameManager : MonoBehaviour
             case GameState.Gameover:
                 onGameOver?.Invoke();
                 Time.timeScale = 0f;
+                PlayerPrefsManager.SetLastGameScore(scoreManager.GetScore());
+                SceneManager.LoadScene(2);
                 return;
 
             case GameState.Paused:
@@ -97,8 +102,13 @@ public class GameManager : MonoBehaviour
     {
         if (context.performed)
         {
-            
-            if (currentState == GameState.Running)
+            Pause();            
+        }
+    }
+
+    public void Pause()
+    {
+        if (currentState == GameState.Running)
             {
                 UpdateGameState(GameState.Paused);
                 pauseState = true;
@@ -110,7 +120,11 @@ public class GameManager : MonoBehaviour
             }
 
             onPause?.Invoke(pauseState);
-        }
+    }
+
+    public void OnQuit()
+    {
+        SceneManager.LoadScene(0);
     }
     
     public enum GameState
