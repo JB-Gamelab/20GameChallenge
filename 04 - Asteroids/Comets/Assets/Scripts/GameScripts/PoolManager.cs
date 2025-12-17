@@ -8,20 +8,25 @@ public class PoolManager : MonoBehaviour
     [SerializeField] private int numberOfLargeAsteroids = 5;
     [SerializeField] private int numberOfMediumAsteroids = 10;
     [SerializeField] private int numberOfSmallAsteroids = 20;
+    [SerializeField] private int numberofPowerUps = 5;
 
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private GameObject largeAsteroidPrefab;
     [SerializeField] private GameObject mediumAsteroidPrefab;
     [SerializeField] private GameObject smallAsteroidPrefab;
+    [SerializeField] private GameObject powerUpPrefab;
 
     private List<GameObject> bulletList;
     private List<GameObject> largeAsteroidList;
     private List<GameObject> mediumAsteroidList;
     private List<GameObject> smallAsteroidList;
+    private List<GameObject> powerUpList;
+
     private GameObject freeBullet;
     private GameObject freeLargeAsteroid;
     private GameObject freeMediumAsteroid;
     private GameObject freeSmallAsteroid;
+    private GameObject freePowerUp;
 
     private void Awake()
     {
@@ -41,11 +46,13 @@ public class PoolManager : MonoBehaviour
         largeAsteroidList = new List<GameObject>();
         mediumAsteroidList = new List<GameObject>();
         smallAsteroidList = new List<GameObject>();
+        powerUpList = new List<GameObject>();
 
         CreatePool(bulletList, numberOfBullets, bulletPrefab);
         CreatePool(largeAsteroidList, numberOfLargeAsteroids, largeAsteroidPrefab);
         CreatePool(mediumAsteroidList, numberOfMediumAsteroids, mediumAsteroidPrefab);
         CreatePool(smallAsteroidList, numberOfSmallAsteroids, smallAsteroidPrefab);
+        CreatePool(powerUpList, numberofPowerUps, powerUpPrefab);
     }
 
     private void CreatePool(List<GameObject> objectList, int numObjects, GameObject objectPrefab)
@@ -118,6 +125,21 @@ public class PoolManager : MonoBehaviour
         return freeSmallAsteroid;        
     }
 
+    public GameObject FindFreePowerUp()
+    {   
+        freePowerUp = null;
+
+        for (int i = 0; i < powerUpList.Count; i++)
+        {
+            if (!powerUpList[i].activeSelf)
+            {
+                freePowerUp = powerUpList[i];
+                return freePowerUp; 
+            }
+        }       
+        return freePowerUp;        
+    }
+
     public void PlayerControllerOnPlayerDeath()
     {
         // Deactivates any active bullets on death
@@ -126,6 +148,14 @@ public class PoolManager : MonoBehaviour
             if (bulletList[i].activeSelf)
             {
                 bulletList[i].gameObject.SetActive(false);
+            }
+        }
+        // Deactivates active power ups on death
+        for (int i = 0; i < powerUpList.Count; i++)
+        {
+            if (powerUpList[i].activeSelf)
+            {
+                powerUpList[i].gameObject.SetActive(false);
             }
         } 
     }

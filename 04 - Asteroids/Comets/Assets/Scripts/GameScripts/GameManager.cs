@@ -28,11 +28,13 @@ public class GameManager : MonoBehaviour
         scoreManager = GetComponent<ScoreManager>();
         UpdateGameState(GameState.Running);
         PlayerController.onPlayerDeath += PlayerControllerOnPlayerDeath;
+        PowerUpController.onPowerUp += PowerUpControllerOnPowerUp;
     }
 
     private void OnDestroy()
     {
         PlayerController.onPlayerDeath -= PlayerControllerOnPlayerDeath;
+        PowerUpController.onPowerUp -= PowerUpControllerOnPowerUp;
     }
 
     private void PlayerControllerOnPlayerDeath()
@@ -80,6 +82,20 @@ public class GameManager : MonoBehaviour
         lives--;
         onLifeLost?.Invoke(lives);
         return lives;
+    }
+
+    private void PowerUpControllerOnPowerUp(int powerUpType)
+    {
+        if (powerUpType == 1)
+        {
+            GainLife();
+        }
+    }
+
+    private void GainLife()
+    {
+        lives++;
+        onLifeLost?.Invoke(lives);
     }
 
     private void Respawn()

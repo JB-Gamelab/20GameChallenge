@@ -41,7 +41,7 @@ public class UIController : MonoBehaviour
 
     private void GameManagerOnLifeLost(int lives)
     {
-        if (lives == 3)
+        if (lives >= 3)
         {
             life1Image.gameObject.SetActive(true);
             life2Image.gameObject.SetActive(true);

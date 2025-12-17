@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float invulTimer = 4;
     [SerializeField] private float flashTimer = 0.5f;
     [SerializeField] private GameObject playerSprite; 
+    [SerializeField] private GameObject shieldSprite;
+    [SerializeField] private int shieldTimer = 4;
 
     private Rigidbody2D rB2D;
     private CapsuleCollider2D capCollider2D;
@@ -21,11 +23,13 @@ public class PlayerController : MonoBehaviour
         capCollider2D = GetComponent<CapsuleCollider2D>();
         spriteRend = playerSprite.GetComponent<SpriteRenderer>();
         GameManager.onRespawn += GameManagerOnRespawn;
+        PowerUpController.onPowerUp += PowerUpControllerOnPowerUp;
     }
 
     private void OnDestroy()
     {
         GameManager.onRespawn -= GameManagerOnRespawn;
+        PowerUpController.onPowerUp -= PowerUpControllerOnPowerUp;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -65,5 +69,22 @@ public class PlayerController : MonoBehaviour
         
         spriteRend.enabled = true;
         capCollider2D.enabled = true;
+    }
+
+    private void PowerUpControllerOnPowerUp(int powerUpType)
+    {
+        if (powerUpType == 2)
+        {
+            StartCoroutine(ShieldTimer());
+        }
+    }
+
+    private IEnumerator ShieldTimer()
+    {
+        capCollider2D.enabled = false;
+        shieldSprite.SetActive(true);
+        yield return new WaitForSeconds(shieldTimer);
+        capCollider2D.enabled = true;
+        shieldSprite.SetActive(false);
     }
 }
