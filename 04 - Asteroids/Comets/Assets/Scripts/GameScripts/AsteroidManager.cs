@@ -14,6 +14,7 @@ public class AsteroidManager : MonoBehaviour
     [SerializeField] float smallAsteroidMinSpeed = 0.4f;
     [SerializeField] float smallAsteroidMaxSpeed = 1.5f;
     [SerializeField] float spawnTimer = 3.0f;
+    [SerializeField] GameObject explosionEffect;
 
     private List<GameObject> activeLargeAsteroids;
 
@@ -31,17 +32,20 @@ public class AsteroidManager : MonoBehaviour
     {
         if (asteroidType == 1)
         {
-            SpawnMediumAsteroid(asteroid, spawnA, spawnB);        
+            SpawnMediumAsteroid(asteroid, spawnA, spawnB);
+            SpawnExplosionEffect(asteroid.transform);        
         }
 
         if (asteroidType == 2)
         {
-            SpawnSmallAsteroid(asteroid, spawnA, spawnB);        
+            SpawnSmallAsteroid(asteroid, spawnA, spawnB);            
+            SpawnExplosionEffect(asteroid.transform);          
         }
 
         if (asteroidType == 3)
         {
-            asteroid.SetActive(false);        
+            asteroid.SetActive(false);
+            SpawnExplosionEffect(asteroid.transform);          
         }
     }
 
@@ -193,6 +197,11 @@ public class AsteroidManager : MonoBehaviour
         }
 
         return spawnLoaction;
+    }
+
+    private void SpawnExplosionEffect(Transform position)
+    {
+        Instantiate(explosionEffect, position.position, Quaternion.identity);
     }
 
     private IEnumerator AsteroidSpawnTimer()

@@ -38,6 +38,7 @@ public class AsteroidController : MonoBehaviour
         if (collision.gameObject.tag == "Bullet")
         {
             AsteroidDestroy();
+            
         }
     }
 

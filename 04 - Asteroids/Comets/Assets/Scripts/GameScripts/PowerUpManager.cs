@@ -6,6 +6,7 @@ public class PowerUpManager : MonoBehaviour
     [SerializeField] private Sprite extraLifeSprite;
     [SerializeField] private Sprite shieldSprite;
     [SerializeField] private Sprite triShotSprite;
+    [SerializeField] private int randomChance = 80;
 
     private void Awake()
     {
@@ -22,7 +23,7 @@ public class PowerUpManager : MonoBehaviour
         if (arg1 == 3)
         {
             int randomSpawn = Random.Range(1, 101);
-            if (randomSpawn > 80)
+            if (randomSpawn > randomChance)
             {
                 int randomPowerUp = Random.Range(1, 4);
                 SpawnRandomPowerUp(object1, randomPowerUp);
@@ -35,23 +36,27 @@ public class PowerUpManager : MonoBehaviour
         GameObject destroyedAsteroid = asteroid;
         int powerUpType = randomPowerUp;
         GameObject powerUp = poolManager.FindFreePowerUp();
-        SpriteRenderer powerUpSprite = powerUp.GetComponentInChildren<SpriteRenderer>();
 
-        powerUp.transform.position = destroyedAsteroid.transform.position;
+        if (powerUp != null)
+        {
+            SpriteRenderer powerUpSprite = powerUp.GetComponentInChildren<SpriteRenderer>();
 
-        if (powerUpType == 1) // Extra Life
-        {
-            powerUpSprite.sprite = extraLifeSprite;
-        }
-        else if (powerUpType == 2) // Shield
-        {
-            powerUpSprite.sprite = shieldSprite;
-        }
-        else if (powerUpType == 3) // Tri Shot
-        {
-            powerUpSprite.sprite = triShotSprite;
-        }
+            powerUp.transform.position = destroyedAsteroid.transform.position;
 
-        powerUp.SetActive(true);
+            if (powerUpType == 1) // Extra Life
+            {
+                powerUpSprite.sprite = extraLifeSprite;
+            }
+            else if (powerUpType == 2) // Shield
+            {
+                powerUpSprite.sprite = shieldSprite;
+            }
+            else if (powerUpType == 3) // Tri Shot
+            {
+                powerUpSprite.sprite = triShotSprite;
+            }
+
+            powerUp.SetActive(true);
+        }
     }
 }

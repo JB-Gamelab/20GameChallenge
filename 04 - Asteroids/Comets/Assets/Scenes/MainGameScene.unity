@@ -1376,6 +1376,7 @@ MonoBehaviour:
   smallAsteroidMinSpeed: 0.4
   smallAsteroidMaxSpeed: 1.5
   spawnTimer: 3
+  explosionEffect: {fileID: 2557847830434399756, guid: 0e169dd8a0030444b9fc1a483e01cd6f, type: 3}
 --- !u!4 &375771553
 Transform:
   m_ObjectHideFlags: 0
@@ -2506,7 +2507,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 6
   m_Sprite: {fileID: -6717884257390833292, guid: 4b994c3ffcb70554c84c0581e4515633, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2869,6 +2870,7 @@ MonoBehaviour:
   extraLifeSprite: {fileID: -8516354498843847366, guid: 560d74c111ae49b458ca4e0530c4fbe1, type: 3}
   shieldSprite: {fileID: -4235669485132270488, guid: 2fc48d0d70afaaa4d9625c0f38f1188e, type: 3}
   triShotSprite: {fileID: 5868972153381610089, guid: 8813ec90902b4ae4d9c125d7883da1ab, type: 3}
+  randomChance: 70
 --- !u!4 &913652601
 Transform:
   m_ObjectHideFlags: 0
