@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 28
-  productGUID: bf0658bd039cac946add33088ceea6cd
+  productGUID: bae9c3e5a81ed754fa530a9b2a52135e
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: Comets
+  productName: Red Gobbler
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -288,10 +288,7 @@ PlayerSettings:
   androidSymbolsSizeThreshold: 800
   m_BuildTargetIcons: []
   m_BuildTargetPlatformIcons: []
-  m_BuildTargetBatching:
-  - m_BuildTarget: WebGL
-    m_StaticBatching: 0
-    m_DynamicBatching: 0
+  m_BuildTargetBatching: []
   m_BuildTargetShaderSettings: []
   m_BuildTargetGraphicsJobs: []
   m_BuildTargetGraphicsJobMode: []
@@ -599,14 +596,14 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: Comets
+  metroPackageName: Red Gobbler
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: Comets
+  metroApplicationDescription: Red Gobbler
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -677,10 +674,10 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 1
   windowsGamepadBackendHint: 0
-  cloudProjectId: 30dea081-a461-407b-8e0c-9583c623837c
+  cloudProjectId: b0b96f05-7725-46a7-bcf1-b1c197b66252
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Comets
+  projectName: Red Gobbler
   organizationId: john-brough-3e6df501-c866-4b5b-b2c8-3fb0b6cedd54
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
