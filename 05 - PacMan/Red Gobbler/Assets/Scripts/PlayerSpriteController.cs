@@ -4,15 +4,21 @@ using UnityEngine;
 public class PlayerSpriteController : MonoBehaviour
 {
     private SpriteRenderer playerSpriteRenderer;
+    private MovementController movementController;
 
     private void Awake()
     {
-        PlayerController.OnDirectionChanged += PlayerControllerOnDirectionChanged;
+        movementController = GetComponent<MovementController>();
     }
 
-    private void OnDestroy()
+    private void OnEnable()
     {
-        PlayerController.OnDirectionChanged -= PlayerControllerOnDirectionChanged;
+        movementController.OnDirectionChanged += PlayerControllerOnDirectionChanged;        
+    }
+
+    private void OnDisable()
+    {
+        movementController.OnDirectionChanged -= PlayerControllerOnDirectionChanged;
     }
 
     private void Start()
@@ -20,20 +26,20 @@ public class PlayerSpriteController : MonoBehaviour
         playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
-    private void PlayerControllerOnDirectionChanged(PlayerController.MoveDirection direction)
+    private void PlayerControllerOnDirectionChanged(MovementController.MoveDirection direction)
     {
         switch (direction)
         {
-            case PlayerController.MoveDirection.Right:
+            case MovementController.MoveDirection.Right:
                 playerSpriteRenderer.transform.eulerAngles = new Vector3(0, 0, 0);
             break;
-            case PlayerController.MoveDirection.Left:
+            case MovementController.MoveDirection.Left:
                 playerSpriteRenderer.transform.eulerAngles = new Vector3(0, 0, 180);
             break;
-            case PlayerController.MoveDirection.Up:
+            case MovementController.MoveDirection.Up:
                 playerSpriteRenderer.transform.eulerAngles = new Vector3(0, 0, 90);
             break;
-            case PlayerController.MoveDirection.Down:
+            case MovementController.MoveDirection.Down:
                 playerSpriteRenderer.transform.eulerAngles = new Vector3(0, 0, -90);
             break;
         }
