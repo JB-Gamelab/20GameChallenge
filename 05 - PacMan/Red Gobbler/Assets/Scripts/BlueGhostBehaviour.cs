@@ -1,27 +1,10 @@
 using System;
 using UnityEngine;
 
-public class BlueGhostBehaviour : MonoBehaviour
+public class BlueGhostBehaviour : GhostBehaviour
 {
-    private GhostController ghostController;
-
-    private void OnEnable()
+    public override Vector3Int GetTargetTile()
     {
-        ghostController.OnAvailableTilesChecked += MovementControllerOnAvailableTilesChecked;
-    }
-
-    private void OnDisable()
-    {
-        ghostController.OnAvailableTilesChecked -= MovementControllerOnAvailableTilesChecked;
-    }
-
-    private void Awake()
-    {
-        ghostController = GetComponent<GhostController>();
-    }
-
-    private void MovementControllerOnAvailableTilesChecked()
-    {
-        ghostController.SetDesiredDirection(MovementController.MoveDirection.Right);
+        throw new NotImplementedException();
     }
 }

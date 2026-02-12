@@ -8,6 +8,7 @@ public class GhostController : MonoBehaviour
 
     [SerializeField] private Tilemap intersectionTileMap;
     [SerializeField] private Tilemap floorTileMap;
+    [SerializeField] private GhostBehaviour ghostBehaviour;
 
     private MovementController movementController;
 
@@ -49,42 +50,55 @@ public class GhostController : MonoBehaviour
         if (intersectionTileMap.HasTile(ghostCellPosition))
         {
             GetPossibleDirections(ghostCellPosition);
+            SetDesiredDirection(CalculateDesiredDirection());
         }
     }
 
     private void GetPossibleDirections(Vector3Int currentCellPosition) // Check each cell surrounding the current intersection cell
     {
-        //Check left cell
-        if (floorTileMap.HasTile(currentCellPosition + leftAdd))
+        //Check left cell, ignore if moving right
+        if (desiredDirection != MovementController.MoveDirection.Right)
         {
-            leftCell = true;
-        } else
-        {
-            leftCell = false;
+            if (floorTileMap.HasTile(currentCellPosition + leftAdd))
+            {
+                leftCell = true;
+            } else
+            {
+                leftCell = false;
+            }
         }
-        //Check right cell
-        if (floorTileMap.HasTile(currentCellPosition + rightAdd))
+        //Check right cell, ignore if mopving left
+        if (desiredDirection != MovementController.MoveDirection.Left)
         {
-            rightCell = true;
-        } else
-        {
-            rightCell = false;
+            if (floorTileMap.HasTile(currentCellPosition + rightAdd))
+            {
+                rightCell = true;
+            } else
+            {
+                rightCell = false;
+            }
         }
-        //Check top cell
-        if (floorTileMap.HasTile(currentCellPosition + topAdd))
+        //Check top cell, ignore if moving down
+        if (desiredDirection != MovementController.MoveDirection.Down)
         {
-            topCell = true;
-        } else
-        {
-            topCell = false;
+            if (floorTileMap.HasTile(currentCellPosition + topAdd))
+            {
+                topCell = true;
+            } else
+            {
+                topCell = false;
+            }
         }
-        //Check bottom cell
-        if (floorTileMap.HasTile(currentCellPosition + bottomAdd))
+        //Check bottom cell, ignore if moving up
+        if (desiredDirection != MovementController.MoveDirection.Up)
         {
-            bottomCell = true;
-        } else
-        {
-            bottomCell = false;
+            if (floorTileMap.HasTile(currentCellPosition + bottomAdd))
+            {
+                bottomCell = true;
+            } else
+            {
+                bottomCell = false;
+            }
         }
 
         availableCells[0] = leftCell;
@@ -111,12 +125,16 @@ public class GhostController : MonoBehaviour
         Debug.Log(desiredDirection);
     }
 
-    public bool[] GetAvailableCells()
+    private MovementController.MoveDirection CalculateDesiredDirection()
     {
-        return availableCells;
+        MovementController.MoveDirection shortestMove;
+
+        shortestMove = MovementController.MoveDirection.Right;
+
+        return shortestMove;
     }
 
-    public void SetDesiredDirection(MovementController.MoveDirection direction)
+    private void SetDesiredDirection(MovementController.MoveDirection direction)
     {
         desiredDirection = direction;
     }

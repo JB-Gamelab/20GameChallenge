@@ -150,3 +150,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   intersectionTileMap: {fileID: 0}
+  floorTileMap: {fileID: 0}
+  ghostBehaviour: {fileID: 0}
