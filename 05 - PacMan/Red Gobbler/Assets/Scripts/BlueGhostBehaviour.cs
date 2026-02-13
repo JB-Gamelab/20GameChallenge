@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class BlueGhostBehaviour : GhostBehaviour
 {
+    [SerializeField] private Transform playerTransform;
+
     public override Vector3Int GetTargetTile()
     {
-        throw new NotImplementedException();
+        return Vector3Int.RoundToInt(playerTransform.position);
     }
 }

@@ -1,5 +1,9 @@
 using System;
+using NUnit.Framework;
+using NUnit.Framework.Internal;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Android;
 using UnityEngine.Tilemaps;
 
 public class GhostController : MonoBehaviour
@@ -8,17 +12,19 @@ public class GhostController : MonoBehaviour
 
     [SerializeField] private Tilemap intersectionTileMap;
     [SerializeField] private Tilemap floorTileMap;
-    [SerializeField] private GhostBehaviour ghostBehaviour;
+    private GhostBehaviour ghostBehaviour;
 
     private MovementController movementController;
 
     private MovementController.MoveDirection desiredDirection;
+    private MovementController.MoveDirection currentDirection;
 
     private Vector3Int ghostCellPosition;
     private Vector3Int leftAdd = new Vector3Int(-1, 0, 0);
     private Vector3Int rightAdd = new Vector3Int(1, 0, 0);
     private Vector3Int topAdd = new Vector3Int(0, 1, 0);
     private Vector3Int bottomAdd = new Vector3Int(0, -1, 0);
+    private Vector3Int[] possibleMovementCells = new Vector3Int[4];
     private bool leftCell;
     private bool rightCell;
     private bool topCell;
@@ -28,6 +34,11 @@ public class GhostController : MonoBehaviour
 
     private void Awake()
     {
+        ghostBehaviour = GetComponent<GhostBehaviour>();
+        if (ghostBehaviour == null)
+        {
+            Debug.Log("No behaviour AI attached");   
+        }
         movementController = GetComponent<MovementController>();
     }
 
@@ -51,55 +62,55 @@ public class GhostController : MonoBehaviour
         {
             GetPossibleDirections(ghostCellPosition);
             SetDesiredDirection(CalculateDesiredDirection());
+            
+            movementController.Move(desiredDirection);
         }
     }
 
     private void GetPossibleDirections(Vector3Int currentCellPosition) // Check each cell surrounding the current intersection cell
     {
+        //Add all 4 movedirection cells to array
+        possibleMovementCells[0] = currentCellPosition + leftAdd;
+        possibleMovementCells[1] = currentCellPosition + rightAdd;
+        possibleMovementCells[2] = currentCellPosition + topAdd;
+        possibleMovementCells[3] = currentCellPosition + bottomAdd;
+
         //Check left cell, ignore if moving right
-        if (desiredDirection != MovementController.MoveDirection.Right)
+        if (floorTileMap.HasTile(possibleMovementCells[0]) && currentDirection != MovementController.MoveDirection.Right)
         {
-            if (floorTileMap.HasTile(currentCellPosition + leftAdd))
-            {
-                leftCell = true;
-            } else
-            {
-                leftCell = false;
-            }
+            leftCell = true;
+        } else
+        {
+            leftCell = false;
         }
+
         //Check right cell, ignore if mopving left
-        if (desiredDirection != MovementController.MoveDirection.Left)
+        if (floorTileMap.HasTile(possibleMovementCells[1]) && currentDirection != MovementController.MoveDirection.Left)
         {
-            if (floorTileMap.HasTile(currentCellPosition + rightAdd))
-            {
-                rightCell = true;
-            } else
-            {
-                rightCell = false;
-            }
+            rightCell = true;
+        } else
+        {
+            rightCell = false;
         }
+        
         //Check top cell, ignore if moving down
-        if (desiredDirection != MovementController.MoveDirection.Down)
+        if (floorTileMap.HasTile(possibleMovementCells[2]) && currentDirection != MovementController.MoveDirection.Down)
         {
-            if (floorTileMap.HasTile(currentCellPosition + topAdd))
-            {
-                topCell = true;
-            } else
-            {
-                topCell = false;
-            }
+            topCell = true;
+        } else
+        {
+            topCell = false;
         }
+
         //Check bottom cell, ignore if moving up
-        if (desiredDirection != MovementController.MoveDirection.Up)
+        if (floorTileMap.HasTile(possibleMovementCells[3]))
         {
-            if (floorTileMap.HasTile(currentCellPosition + bottomAdd))
-            {
-                bottomCell = true;
-            } else
-            {
-                bottomCell = false;
-            }
+            bottomCell = true;
+        } else
+        {
+            bottomCell = false;
         }
+        
 
         availableCells[0] = leftCell;
         availableCells[1] = rightCell;
@@ -111,7 +122,8 @@ public class GhostController : MonoBehaviour
 
     private void MovementControllerOnDirectionChanged(MovementController.MoveDirection direction)
     {
-        //desiredDirection = direction;
+        currentDirection = desiredDirection;
+        Debug.Log(currentDirection);
     }
 
     private void Start()
@@ -122,20 +134,59 @@ public class GhostController : MonoBehaviour
     private void Update()
     {        
         movementController.Move(desiredDirection);
-        Debug.Log(desiredDirection);
     }
 
     private MovementController.MoveDirection CalculateDesiredDirection()
     {
-        MovementController.MoveDirection shortestMove;
+        Vector3Int targetCell = ghostBehaviour.GetTargetTile();
+        MovementController.MoveDirection shortestMove = MovementController.MoveDirection.Stopped;
+        int moveDistance = 20;
 
-        shortestMove = MovementController.MoveDirection.Right;
+        for (int i = 0; i < availableCells.Length; i++)
+        {
+            if (availableCells[i])
+            {
+                int testDistance = MeasureDistance(possibleMovementCells[i], targetCell);
 
+                if (testDistance < moveDistance)
+                {
+                    moveDistance = testDistance;
+                    if (i == 0)
+                    {
+                        shortestMove = MovementController.MoveDirection.Left;
+                    }
+                    if (i == 1)
+                    {
+                        shortestMove = MovementController.MoveDirection.Right;
+                    }
+                    if (i == 2)
+                    {
+                        shortestMove = MovementController.MoveDirection.Up;
+                    }
+                    if (i == 3)
+                    {
+                        shortestMove = MovementController.MoveDirection.Down;
+                    }
+                }
+            }
+        }
         return shortestMove;
     }
 
     private void SetDesiredDirection(MovementController.MoveDirection direction)
     {
         desiredDirection = direction;
+    }
+
+    private int MeasureDistance(Vector3Int testCell, Vector3Int targetCell)
+    {
+        int testDistance = 0;
+
+        int dX = Mathf.Abs(testCell.x - targetCell.x);
+        int dY = Mathf.Abs(testCell.y - targetCell.y);
+
+        testDistance = dX + dY;
+
+        return testDistance;
     }
 }
