@@ -75,6 +75,11 @@ public class GhostController : MonoBehaviour
         possibleMovementCells[2] = currentCellPosition + topAdd;
         possibleMovementCells[3] = currentCellPosition + bottomAdd;
 
+        for (int i = 0; i < availableCells.Length; i++)
+        {
+            availableCells[i] = false;
+        }
+
         //Check left cell, ignore if moving right
         if (floorTileMap.HasTile(possibleMovementCells[0]) && currentDirection != MovementController.MoveDirection.Right)
         {
