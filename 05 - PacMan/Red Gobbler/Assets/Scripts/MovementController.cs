@@ -115,6 +115,11 @@ public class MovementController : MonoBehaviour
         return new Vector3Int(0, 0);
     }
 
+    public MoveDirection GetCurrentMoveDirection()
+    {
+        return currentDirection;
+    }
+
     public enum MoveDirection
     {
         Right,
