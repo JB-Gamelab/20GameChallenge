@@ -11,21 +11,38 @@ public abstract class GhostBehaviour : MonoBehaviour
             Vector3Int targetCell = GetTargetTile();
 
             float shortest = float.MaxValue;
+
+            //Only do this when backwards movement NOT allowed
+            MovementController.MoveDirection reverse = Opposite(currentDirection);
+            moveOptions.Remove(reverse);
+
             MovementController.MoveDirection bestMove = moveOptions[0];
 
-            foreach (MovementController.MoveDirection dir in moveOptions)
+            foreach (MovementController.MoveDirection direction in moveOptions)
             {
-                  Vector3Int nextCell = GetNextCell(currentPosition, currentDirection);
+                  Vector3Int nextCell = GetNextCell(currentPosition, direction);
                   float distance = Vector3Int.Distance(nextCell, targetCell);
 
                   if (distance < shortest)
                   {
                         shortest = distance;
-                        bestMove = dir;
+                        bestMove = direction;
                   }
             }
 
             return bestMove;
+      }
+
+      private MovementController.MoveDirection Opposite(MovementController.MoveDirection direction)
+      {
+            switch (direction)
+            {
+                  case MovementController.MoveDirection.Left: return MovementController.MoveDirection.Right;
+                  case MovementController.MoveDirection.Right: return MovementController.MoveDirection.Left;
+                  case MovementController.MoveDirection.Up: return MovementController.MoveDirection.Down;
+                  case MovementController.MoveDirection.Down: return MovementController.MoveDirection.Up;
+                  default: return MovementController.MoveDirection.Stopped;
+            }
       }
 
       private Vector3Int GetNextCell(Vector3Int currentPos, MovementController.MoveDirection direction)
@@ -34,19 +51,19 @@ public abstract class GhostBehaviour : MonoBehaviour
 
             if (direction == MovementController.MoveDirection.Left)
             {
-                  nextCell = currentPos + new Vector3Int(-1, 0, 0);
+                  nextCell = currentPos + Vector3Int.left;
             }
             if (direction == MovementController.MoveDirection.Right)
             {
-                  nextCell = currentPos + new Vector3Int(1, 0, 0);
+                  nextCell = currentPos + Vector3Int.right;
             }
             if (direction == MovementController.MoveDirection.Up)
             {
-                  nextCell = currentPos + new Vector3Int(0, 1, 0);
+                  nextCell = currentPos + Vector3Int.up;
             }
             if (direction == MovementController.MoveDirection.Down)
             {
-                  nextCell = currentPos + new Vector3Int(0, -1, 0);
+                  nextCell = currentPos + Vector3Int.down;
             }
 
             return nextCell;

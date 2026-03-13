@@ -9,8 +9,6 @@ using UnityEngine.Tilemaps;
 
 public class GhostController : MonoBehaviour
 {
-    public event Action OnAvailableTilesChecked;
-
     [SerializeField] private Tilemap intersectionTileMap;
     [SerializeField] private Tilemap floorTileMap;
     private GhostBehaviour ghostBehaviour;
@@ -18,12 +16,9 @@ public class GhostController : MonoBehaviour
     private MovementController movementController;
 
     private MovementController.MoveDirection currentDirection;
+    private MovementController.MoveDirection desiredDirection;
 
     private Vector3Int ghostCellPosition;
-    private Vector3Int leftAdd = new Vector3Int(-1, 0, 0);
-    private Vector3Int rightAdd = new Vector3Int(1, 0, 0);
-    private Vector3Int upAdd = new Vector3Int(0, 1, 0);
-    private Vector3Int downAdd = new Vector3Int(0, -1, 0);
 
     private void Awake()
     {
@@ -33,6 +28,8 @@ public class GhostController : MonoBehaviour
             Debug.Log("No behaviour AI attached");   
         }
         movementController = GetComponent<MovementController>();
+
+        MoveCheck();
     }
 
     private void OnEnable()
@@ -49,57 +46,66 @@ public class GhostController : MonoBehaviour
 
     private void MovementControllerOnCentreSnap()
     {
-        ghostCellPosition = floorTileMap.WorldToCell(transform.position);
-
-        if (intersectionTileMap.HasTile(ghostCellPosition))
-        {
-            List<MovementController.MoveDirection> moveOptions = GetPossibleDirections(ghostCellPosition);
-            
-           // MovementController.MoveDirection desiredDirection = GhostBehaviour.ChooseDirection(moveOptions, currentDirection, ghostCellPosition);
-
-           // movementController.Move(desiredDirection);
-        }
+        MoveCheck();
     }
 
     private List<MovementController.MoveDirection> GetPossibleDirections(Vector3Int currentCellPosition)
     {
         List<MovementController.MoveDirection> options = new List<MovementController.MoveDirection>();
 
-        if (floorTileMap.HasTile(currentCellPosition + leftAdd))
-        {
-            options.Add(MovementController.MoveDirection.Left);
-        }
-
-        if (floorTileMap.HasTile(currentCellPosition + rightAdd))
-        {
-            options.Add(MovementController.MoveDirection.Right);
-        }
-
-        if (floorTileMap.HasTile(currentCellPosition + upAdd))
+        if (floorTileMap.HasTile(currentCellPosition + Vector3Int.up))
         {
             options.Add(MovementController.MoveDirection.Up);
         }
 
-        if (floorTileMap.HasTile(currentCellPosition + downAdd))
+        if (floorTileMap.HasTile(currentCellPosition + Vector3Int.right))
+        {
+            options.Add(MovementController.MoveDirection.Right);
+        }
+
+        if (floorTileMap.HasTile(currentCellPosition + Vector3Int.down))
         {
             options.Add(MovementController.MoveDirection.Down);
         }
 
+        if (floorTileMap.HasTile(currentCellPosition + Vector3Int.left))
+        {
+            options.Add(MovementController.MoveDirection.Left);
+        }
+           
         return options;
+    }
+
+    private void MoveCheck()
+    {
+        ghostCellPosition = floorTileMap.WorldToCell(transform.position);
+
+        if (intersectionTileMap.HasTile(ghostCellPosition))
+        {
+            List<MovementController.MoveDirection> moveOptions = GetPossibleDirections(ghostCellPosition);
+            
+             desiredDirection = ghostBehaviour.ChooseDirection(moveOptions, currentDirection, ghostCellPosition);         
+             movementController.Move(desiredDirection);
+        } else
+        {
+            desiredDirection = currentDirection;
+            movementController.Move(desiredDirection);
+        }
     }
 
     private void MovementControllerOnDirectionChanged(MovementController.MoveDirection direction)
     {
-        //currentDirection = MovementController.GetCurrentMoveDirection();
-    }
-
-    private void Start()
-    {
-       // desiredDirection = MovementController.MoveDirection.Up;
+        if (direction == MovementController.MoveDirection.Stopped)
+        {
+            MoveCheck();
+        } else
+        {
+            currentDirection = movementController.GetCurrentMoveDirection();
+        }        
     }
 
     private void Update()
-    {        
-      //  movementController.Move(desiredDirection);
+    {
+        movementController.Move(desiredDirection);
     }
 }
