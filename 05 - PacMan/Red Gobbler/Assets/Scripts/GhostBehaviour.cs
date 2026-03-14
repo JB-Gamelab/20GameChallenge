@@ -4,9 +4,21 @@ using UnityEngine;
 
 public abstract class GhostBehaviour : MonoBehaviour
 {
+      public event Action<GhostState> OnStateChanged;
+
+      [SerializeField] public Transform cornerTransform;
+      [SerializeField] public Transform ghostStartTransform;
+
+      public GhostState ghostState;
+     
       public abstract Vector3Int GetTargetTile();
 
-      public MovementController.MoveDirection ChooseDirection(List<MovementController.MoveDirection> moveOptions, MovementController.MoveDirection currentDirection, Vector3Int currentPosition)
+    private void Start()
+    {
+        ghostState = GhostState.Waiting;
+    }
+
+    public MovementController.MoveDirection ChooseDirection(List<MovementController.MoveDirection> moveOptions, MovementController.MoveDirection currentDirection, Vector3Int currentPosition)
       {
             Vector3Int targetCell = GetTargetTile();
 
@@ -67,5 +79,16 @@ public abstract class GhostBehaviour : MonoBehaviour
             }
 
             return nextCell;
+      }
+
+
+
+      public enum GhostState
+      {
+            Waiting,
+            Chasing,
+            Scattering,
+            Scared,
+            Eaten
       }
 }

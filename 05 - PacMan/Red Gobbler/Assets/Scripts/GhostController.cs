@@ -28,25 +28,33 @@ public class GhostController : MonoBehaviour
             Debug.Log("No behaviour AI attached");   
         }
         movementController = GetComponent<MovementController>();
-
-        MoveCheck();
     }
 
     private void OnEnable()
     {
         movementController.OnDirectionChanged += MovementControllerOnDirectionChanged;
         movementController.OnCentreSnap += MovementControllerOnCentreSnap;
+        ghostBehaviour.OnStateChanged += GhostBehaviourOnStateChanged;
     }
 
     private void OnDisable()
     {
         movementController.OnDirectionChanged -= MovementControllerOnDirectionChanged;
         movementController.OnCentreSnap -= MovementControllerOnCentreSnap;
+        ghostBehaviour.OnStateChanged -= GhostBehaviourOnStateChanged;
     }
 
     private void MovementControllerOnCentreSnap()
     {
         MoveCheck();
+    }
+
+    private void GhostBehaviourOnStateChanged(GhostBehaviour.GhostState ghostState)
+    {
+        if (ghostState != GhostBehaviour.GhostState.Waiting)
+        {
+            MoveCheck();
+        }
     }
 
     private List<MovementController.MoveDirection> GetPossibleDirections(Vector3Int currentCellPosition)

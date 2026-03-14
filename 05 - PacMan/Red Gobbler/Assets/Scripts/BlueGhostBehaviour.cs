@@ -7,6 +7,18 @@ public class BlueGhostBehaviour : GhostBehaviour
 
     public override Vector3Int GetTargetTile()
     {
-        return Vector3Int.RoundToInt(playerTransform.position);
+        switch(ghostState)
+        {
+            case GhostState.Chasing:
+            return Vector3Int.RoundToInt(playerTransform.position);
+
+            case GhostState.Scattering:
+            return Vector3Int.RoundToInt(cornerTransform.position);
+
+            case GhostState.Eaten:
+            return Vector3Int.RoundToInt(ghostStartTransform.position);
+        }
+
+        return new Vector3Int(0, 0, 0);
     }
 }
