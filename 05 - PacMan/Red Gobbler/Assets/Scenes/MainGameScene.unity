@@ -3453,6 +3453,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cornerTransform: {fileID: 2052407487}
   ghostStartTransform: {fileID: 247981252}
+  dotThreshold: 2
+  releaseTimer: 6.1
+  dotsCollected: 0
+  elapsedTime: 0
+  ghostState: 0
   playerTransform: {fileID: 303518866}
 --- !u!1 &247981251
 GameObject:

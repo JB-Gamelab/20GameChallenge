@@ -32,7 +32,7 @@ public class MovementController : MonoBehaviour
         }
         directionVector = SetDirectionVector(actualMoveDirection);    
 
-        transform.position += directionVector * moveSpeed * Time.deltaTime;
+        transform.position += directionVector * moveSpeed * Time.deltaTime;        
     }
 
     private void CellSnap(Vector3Int cellPosition, Vector3 cellWorldPosition)

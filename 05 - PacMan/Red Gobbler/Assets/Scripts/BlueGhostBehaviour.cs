@@ -1,13 +1,14 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BlueGhostBehaviour : GhostBehaviour
 {
     [SerializeField] private Transform playerTransform;
 
-    public override Vector3Int GetTargetTile()
+    public override Vector3Int GetTargetTile(GhostState state)
     {
-        switch(ghostState)
+        switch(state)
         {
             case GhostState.Chasing:
             return Vector3Int.RoundToInt(playerTransform.position);
@@ -17,8 +18,14 @@ public class BlueGhostBehaviour : GhostBehaviour
 
             case GhostState.Eaten:
             return Vector3Int.RoundToInt(ghostStartTransform.position);
+
+            case GhostState.Waiting:
+            return Vector3Int.zero;
+
+            case GhostState.Scared:
+            return Vector3Int.RoundToInt(cornerTransform.position);
         }
 
-        return new Vector3Int(0, 0, 0);
+        return Vector3Int.zero;
     }
 }

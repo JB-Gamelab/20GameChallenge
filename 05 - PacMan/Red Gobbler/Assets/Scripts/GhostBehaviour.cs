@@ -8,19 +8,31 @@ public abstract class GhostBehaviour : MonoBehaviour
 
       [SerializeField] public Transform cornerTransform;
       [SerializeField] public Transform ghostStartTransform;
+      [SerializeField] private int dotThreshold;
+      [SerializeField] private float releaseTimer;
+      [SerializeField] private int dotsCollected;
+      [SerializeField] private float elapsedTime;
 
       public GhostState ghostState;
      
-      public abstract Vector3Int GetTargetTile();
+      public abstract Vector3Int GetTargetTile(GhostState state);
 
-    private void Start()
-    {
-        ghostState = GhostState.Waiting;
-    }
-
-    public MovementController.MoveDirection ChooseDirection(List<MovementController.MoveDirection> moveOptions, MovementController.MoveDirection currentDirection, Vector3Int currentPosition)
+      private void Start()
       {
-            Vector3Int targetCell = GetTargetTile();
+            ChangeGhostState(GhostState.Waiting);
+      }
+
+      private void Update()
+      {
+            if (StartGhost())
+            {
+                  ChangeGhostState(GhostState.Scattering);
+            }
+      }
+
+      public MovementController.MoveDirection ChooseDirection(List<MovementController.MoveDirection> moveOptions, MovementController.MoveDirection currentDirection, Vector3Int currentPosition)
+      {
+            Vector3Int targetCell = GetTargetTile(ghostState);
 
             float shortest = float.MaxValue;
 
@@ -81,7 +93,23 @@ public abstract class GhostBehaviour : MonoBehaviour
             return nextCell;
       }
 
+      private void ChangeGhostState(GhostState state)
+      {
+            if (ghostState == state)
+                  return;
 
+            ghostState = state;
+            OnStateChanged?.Invoke(state);
+      }
+
+      private bool StartGhost()
+      {
+            if (dotsCollected >= dotThreshold || elapsedTime >= releaseTimer)
+            {
+                  return true;
+            }
+            return false;
+      }
 
       public enum GhostState
       {

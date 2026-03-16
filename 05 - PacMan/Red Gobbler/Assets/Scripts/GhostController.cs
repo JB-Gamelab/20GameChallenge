@@ -114,6 +114,9 @@ public class GhostController : MonoBehaviour
 
     private void Update()
     {
-        movementController.Move(desiredDirection);
+        if (ghostBehaviour.ghostState != GhostBehaviour.GhostState.Waiting)
+        {
+            movementController.Move(desiredDirection);
+        }
     }
 }
