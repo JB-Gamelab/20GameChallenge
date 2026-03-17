@@ -17,7 +17,17 @@ public abstract class GhostBehaviour : MonoBehaviour
      
       public abstract Vector3Int GetTargetTile(GhostState state);
 
-      private void Start()
+    private void OnEnable()
+    {
+        PowerPillController.OnPillCollected += PowerPillControllerOnPillCollected;
+    }
+
+    private void OnDisable()
+    {
+        PowerPillController.OnPillCollected += PowerPillControllerOnPillCollected;
+    }
+
+    private void Start()
       {
             ChangeGhostState(GhostState.Waiting);
       }
@@ -109,6 +119,11 @@ public abstract class GhostBehaviour : MonoBehaviour
                   return true;
             }
             return false;
+      }      
+
+      private void PowerPillControllerOnPillCollected()
+      {
+            ChangeGhostState(GhostState.Scared);
       }
 
       public enum GhostState
