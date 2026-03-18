@@ -6,6 +6,25 @@ public class BlueGhostBehaviour : GhostBehaviour
 {
     [SerializeField] private Transform playerTransform;
 
+    private bool ghostStart = false;
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        GameManager.OnInkyRelease += GameManagerOnInkyRelease;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        GameManager.OnInkyRelease -= GameManagerOnInkyRelease;
+    }
+
+    private void GameManagerOnInkyRelease()
+    {
+        ghostStart = true;
+    }
+
     public override Vector3Int GetTargetTile(GhostState state)
     {
         switch(state)
@@ -27,5 +46,10 @@ public class BlueGhostBehaviour : GhostBehaviour
         }
 
         return Vector3Int.zero;
+    }
+
+    public override bool StartGhost()
+    {
+        return ghostStart;
     }
 }

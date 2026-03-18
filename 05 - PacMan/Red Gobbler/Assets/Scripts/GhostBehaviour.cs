@@ -8,35 +8,32 @@ public abstract class GhostBehaviour : MonoBehaviour
 
       [SerializeField] public Transform cornerTransform;
       [SerializeField] public Transform ghostStartTransform;
-      [SerializeField] private int dotThreshold;
-      [SerializeField] private float releaseTimer;
-      [SerializeField] private int dotsCollected;
-      [SerializeField] private float elapsedTime;
 
       public GhostState ghostState;
      
       public abstract Vector3Int GetTargetTile(GhostState state);
+      public abstract bool StartGhost();
 
-    private void OnEnable()
-    {
-        PowerPillController.OnPillCollected += PowerPillControllerOnPillCollected;
-    }
+      protected virtual void OnEnable()
+      {
+            GameManager.OnPowerPillCollected += GameManagerOnPowerPillCollected;
+      }
 
-    private void OnDisable()
-    {
-        PowerPillController.OnPillCollected += PowerPillControllerOnPillCollected;
-    }
+      protected virtual void OnDisable()
+      {
+            GameManager.OnPowerPillCollected -= GameManagerOnPowerPillCollected;
+      }
 
-    private void Start()
+      private void Start()
       {
             ChangeGhostState(GhostState.Waiting);
       }
 
       private void Update()
       {
-            if (StartGhost())
+            if (ghostState == GhostState.Waiting && StartGhost())
             {
-                  ChangeGhostState(GhostState.Scattering);
+                  ChangeGhostState(GhostState.Chasing);
             }
       }
 
@@ -110,18 +107,9 @@ public abstract class GhostBehaviour : MonoBehaviour
 
             ghostState = state;
             OnStateChanged?.Invoke(state);
-      }
+      }     
 
-      private bool StartGhost()
-      {
-            if (dotsCollected >= dotThreshold || elapsedTime >= releaseTimer)
-            {
-                  return true;
-            }
-            return false;
-      }      
-
-      private void PowerPillControllerOnPillCollected()
+      private void GameManagerOnPowerPillCollected()
       {
             ChangeGhostState(GhostState.Scared);
       }

@@ -12,15 +12,17 @@ public class DotGeneration : MonoBehaviour
 
     private BoundsInt bounds;
     private int dotCount = 0;
+    private int pillCount = 0;
 
     private void Start()
     {
-        dotCount = CalculateDots();
+        CalculateDots();
     }
 
-    private int CalculateDots()
+    private void CalculateDots()
     {
-        int dots = 0;
+        dotCount = 0;
+        pillCount = 0;
 
         bounds = dotTileMap.cellBounds;
 
@@ -42,19 +44,27 @@ public class DotGeneration : MonoBehaviour
                     if (tile == dotTile)
                     {
                         Instantiate(dotPrefab, worldPosition, Quaternion.identity, this.transform);
+                        dotCount++;
                     }
 
                     if (tile == powerUpTile)
                     {
                         Instantiate(powerUpPrefab, worldPosition, Quaternion.identity, this.transform);
+                        pillCount++;
                     }
-
-                    dots++;
                 }
             }
         }
         dotTileMap.gameObject.SetActive(false);
-        
-        return dots;
+    }
+
+    public int GetDotCount()
+    {
+        return dotCount;
+    }
+
+    public int GetPillCount()
+    {
+        return pillCount;
     }
 }

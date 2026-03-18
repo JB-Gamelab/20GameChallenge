@@ -4596,55 +4596,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1190327510}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &492869919
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 492869920}
-  - component: {fileID: 492869921}
-  m_Layer: 0
-  m_Name: DotCollection
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &492869920
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 492869919}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &492869921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 492869919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2f6bfd826dbe2a47b7d299eea65b877, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dotTileMap: {fileID: 763666684}
-  dotPrefab: {fileID: 5406317321657024910, guid: 8866ba06f20eaee408e99b790f83d133, type: 3}
-  powerUpPrefab: {fileID: 4310845657327651894, guid: 387b6ab231c86704488c21ac83bac991, type: 3}
-  dotTile: {fileID: 11400000, guid: 9fcee7b55a807bc488c550857fec1fa1, type: 2}
-  powerUpTile: {fileID: 11400000, guid: 40418bd5e257bc440b31b963196fc0c2, type: 2}
 --- !u!1 &591680937
 GameObject:
   m_ObjectHideFlags: 0
@@ -7437,6 +7388,7 @@ GameObject:
   m_Component:
   - component: {fileID: 953923991}
   - component: {fileID: 953923990}
+  - component: {fileID: 953923992}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -7456,6 +7408,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a50fe587026562d40a945545731ee046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inkyRelease: 212
+  clydeRelease: 182
+  blinkyFaster: 20
+  blinkyFastest: 10
 --- !u!4 &953923991
 Transform:
   m_ObjectHideFlags: 0
@@ -7471,6 +7427,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &953923992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953923989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2f6bfd826dbe2a47b7d299eea65b877, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dotTileMap: {fileID: 763666684}
+  dotPrefab: {fileID: 5406317321657024910, guid: 8866ba06f20eaee408e99b790f83d133, type: 3}
+  powerUpPrefab: {fileID: 4310845657327651894, guid: 387b6ab231c86704488c21ac83bac991, type: 3}
+  dotTile: {fileID: 11400000, guid: 9fcee7b55a807bc488c550857fec1fa1, type: 2}
+  powerUpTile: {fileID: 11400000, guid: 40418bd5e257bc440b31b963196fc0c2, type: 2}
 --- !u!1 &1020038349
 GameObject:
   m_ObjectHideFlags: 0
@@ -14323,7 +14296,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5616824072643489158, guid: 09a713c8f1b149f41bfdf7c9d1ca4f68, type: 3}
       propertyPath: moveSpeed
-      value: 5
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 5616824072643489158, guid: 09a713c8f1b149f41bfdf7c9d1ca4f68, type: 3}
       propertyPath: floorTileMap
@@ -14347,7 +14320,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 1190580004}
   - {fileID: 1190327510}
-  - {fileID: 492869920}
   - {fileID: 303518866}
   - {fileID: 7122678467101294016}
   - {fileID: 2052407487}
