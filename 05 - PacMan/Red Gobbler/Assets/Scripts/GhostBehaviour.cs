@@ -17,11 +17,13 @@ public abstract class GhostBehaviour : MonoBehaviour
       protected virtual void OnEnable()
       {
             GameManager.OnPowerPillCollected += GameManagerOnPowerPillCollected;
+            GameManager.OnPowerPillExpired += GameManagerOnPowerPillExpired;
       }
 
       protected virtual void OnDisable()
       {
             GameManager.OnPowerPillCollected -= GameManagerOnPowerPillCollected;
+            GameManager.OnPowerPillExpired -= GameManagerOnPowerPillExpired;
       }
 
       private void Start()
@@ -112,6 +114,11 @@ public abstract class GhostBehaviour : MonoBehaviour
       private void GameManagerOnPowerPillCollected()
       {
             ChangeGhostState(GhostState.Scared);
+      }
+
+      private void GameManagerOnPowerPillExpired()
+      {
+            ChangeGhostState(GhostState.Chasing);
       }
 
       public enum GhostState
