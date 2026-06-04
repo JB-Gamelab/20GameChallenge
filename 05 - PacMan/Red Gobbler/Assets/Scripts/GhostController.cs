@@ -17,8 +17,11 @@ public class GhostController : MonoBehaviour
 
     private MovementController.MoveDirection currentDirection;
     private MovementController.MoveDirection desiredDirection;
+    private GhostBehaviour.GhostState currentState;
 
     private Vector3Int ghostCellPosition;
+
+    private bool isScared = false;
 
     private void Awake()
     {
@@ -55,6 +58,17 @@ public class GhostController : MonoBehaviour
         {
             MoveCheck();
         }
+
+        if (ghostState == GhostBehaviour.GhostState.Scared)
+        {
+            isScared = true;
+        } 
+        else
+        {
+            isScared = false;
+        }
+
+        currentState = ghostState;
     }
 
     private List<MovementController.MoveDirection> GetPossibleDirections(Vector3Int currentCellPosition)
@@ -85,19 +99,28 @@ public class GhostController : MonoBehaviour
     }
 
     private void MoveCheck()
-    {
-        ghostCellPosition = floorTileMap.WorldToCell(transform.position);
+    {        
+        if (!isScared)
+        {
+            ghostCellPosition = floorTileMap.WorldToCell(transform.position);
 
-        if (intersectionTileMap.HasTile(ghostCellPosition))
+            if (intersectionTileMap.HasTile(ghostCellPosition))
+            {
+                List<MovementController.MoveDirection> moveOptions = GetPossibleDirections(ghostCellPosition);
+                
+                desiredDirection = ghostBehaviour.ChooseDirection(moveOptions, currentDirection, ghostCellPosition);         
+                movementController.Move(desiredDirection);
+            } else
+            {
+                desiredDirection = currentDirection;
+                movementController.Move(desiredDirection);
+            }
+        }
+        else
         {
-            List<MovementController.MoveDirection> moveOptions = GetPossibleDirections(ghostCellPosition);
-            
-             desiredDirection = ghostBehaviour.ChooseDirection(moveOptions, currentDirection, ghostCellPosition);         
-             movementController.Move(desiredDirection);
-        } else
-        {
-            desiredDirection = currentDirection;
+            desiredDirection = ghostBehaviour.Opposite(currentDirection);
             movementController.Move(desiredDirection);
+            isScared = false;
         }
     }
 

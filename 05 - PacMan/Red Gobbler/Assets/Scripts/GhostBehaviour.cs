@@ -66,7 +66,7 @@ public abstract class GhostBehaviour : MonoBehaviour
             return bestMove;
       }
 
-      private MovementController.MoveDirection Opposite(MovementController.MoveDirection direction)
+      public MovementController.MoveDirection Opposite(MovementController.MoveDirection direction)
       {
             switch (direction)
             {
