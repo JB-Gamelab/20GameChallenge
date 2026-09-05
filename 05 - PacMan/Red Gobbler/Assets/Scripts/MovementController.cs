@@ -10,7 +10,7 @@ public class MovementController : MonoBehaviour
     [SerializeField] private Tilemap floorTileMap;
     [SerializeField] private Tilemap teleportTileMap;
     [SerializeField] private float cellCentreOffset = 0.05f;
-    [SerializeField] private float moveSpeed = 5f;
+    private float moveSpeed;
 
     private MoveDirection actualMoveDirection;
     private MoveDirection currentDirection;
@@ -118,6 +118,11 @@ public class MovementController : MonoBehaviour
     public MoveDirection GetCurrentMoveDirection()
     {
         return currentDirection;
+    }
+
+    public void SetMoveSpeed(float speed)
+    {
+        moveSpeed = speed;
     }
 
     public enum MoveDirection

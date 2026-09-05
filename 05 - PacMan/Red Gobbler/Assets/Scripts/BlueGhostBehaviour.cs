@@ -5,6 +5,10 @@ using UnityEngine;
 public class BlueGhostBehaviour : GhostBehaviour
 {
     [SerializeField] private Transform playerTransform;
+    [SerializeField] public float chaseSpeed;
+    [SerializeField] public float scatterSpeed;
+    [SerializeField] public float scaredSpeed;
+    [SerializeField] public float eatenSpeed;
 
     private bool ghostStart = false;
 
@@ -46,6 +50,29 @@ public class BlueGhostBehaviour : GhostBehaviour
         }
 
         return Vector3Int.zero;
+    }
+
+    public override float GetGhostSpeed(GhostState state)
+    {
+        switch(state)
+        {
+            case GhostState.Chasing:
+            return chaseSpeed;
+
+            case GhostState.Scattering:
+            return scatterSpeed;
+
+            case GhostState.Eaten:
+            return eatenSpeed;
+
+            case GhostState.Waiting:
+            return 0;
+
+            case GhostState.Scared:
+            return scaredSpeed;
+        }
+
+        return 0;
     }
 
     public override bool StartGhost()

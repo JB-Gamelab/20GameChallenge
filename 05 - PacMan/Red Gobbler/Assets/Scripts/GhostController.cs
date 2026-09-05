@@ -1,10 +1,5 @@
-using System;
 using System.Collections.Generic;
-using NUnit.Framework;
-using NUnit.Framework.Internal;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Android;
 using UnityEngine.Tilemaps;
 
 public class GhostController : MonoBehaviour
@@ -54,6 +49,8 @@ public class GhostController : MonoBehaviour
 
     private void GhostBehaviourOnStateChanged(GhostBehaviour.GhostState ghostState)
     {
+        movementController.SetMoveSpeed(ghostBehaviour.GetGhostSpeed(ghostState));
+
         if (ghostState != GhostBehaviour.GhostState.Waiting)
         {
             MoveCheck();

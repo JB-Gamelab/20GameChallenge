@@ -3439,7 +3439,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4804631430099776560, guid: 09a713c8f1b149f41bfdf7c9d1ca4f68, type: 3}
   m_PrefabInstance: {fileID: 7122678467101294016}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &103380832
+--- !u!114 &103380836
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3453,12 +3453,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cornerTransform: {fileID: 2052407487}
   ghostStartTransform: {fileID: 247981252}
-  dotThreshold: 2
-  releaseTimer: 6.1
-  dotsCollected: 0
-  elapsedTime: 0
   ghostState: 0
   playerTransform: {fileID: 303518866}
+  chaseSpeed: 4.5
+  scatterSpeed: 3
+  scaredSpeed: 3
+  eatenSpeed: 8
 --- !u!1 &247981251
 GameObject:
   m_ObjectHideFlags: 0
@@ -3737,7 +3737,6 @@ MonoBehaviour:
   floorTileMap: {fileID: 102658445}
   teleportTileMap: {fileID: 591680938}
   cellCentreOffset: 0.05
-  moveSpeed: 5
 --- !u!50 &303518872
 Rigidbody2D:
   serializedVersion: 5
@@ -7412,6 +7411,9 @@ MonoBehaviour:
   clydeRelease: 182
   blinkyFaster: 20
   blinkyFastest: 10
+  scaredTime: 10
+  lives: 3
+  pacman: {fileID: 303518865}
 --- !u!4 &953923991
 Transform:
   m_ObjectHideFlags: 0
@@ -14294,9 +14296,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5605324152714023367, guid: 09a713c8f1b149f41bfdf7c9d1ca4f68, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5605324152714023367, guid: 09a713c8f1b149f41bfdf7c9d1ca4f68, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5605324152714023367, guid: 09a713c8f1b149f41bfdf7c9d1ca4f68, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5605324152714023367, guid: 09a713c8f1b149f41bfdf7c9d1ca4f68, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5605324152714023367, guid: 09a713c8f1b149f41bfdf7c9d1ca4f68, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5605324152714023367, guid: 09a713c8f1b149f41bfdf7c9d1ca4f68, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5616824072643489158, guid: 09a713c8f1b149f41bfdf7c9d1ca4f68, type: 3}
       propertyPath: moveSpeed
-      value: 4.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5616824072643489158, guid: 09a713c8f1b149f41bfdf7c9d1ca4f68, type: 3}
       propertyPath: floorTileMap
@@ -14312,7 +14338,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4804631430099776560, guid: 09a713c8f1b149f41bfdf7c9d1ca4f68, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 103380832}
+      addedObject: {fileID: 103380836}
   m_SourcePrefab: {fileID: 100100000, guid: 09a713c8f1b149f41bfdf7c9d1ca4f68, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

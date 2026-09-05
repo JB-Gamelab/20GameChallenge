@@ -4,23 +4,34 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private float playerSpeed = 4.5f;
+
+    public static event Action <GhostController> OnGhostEaten;
+    public static event Action OnPacmanEaten;
     private MovementController movementController;
 
     private MovementController.MoveDirection desiredDirection;
 
+    private bool powerPillAcvtive = false;
+
     private void Awake()
     {
         movementController = GetComponent<MovementController>();
+        movementController.SetMoveSpeed(playerSpeed);
     }
 
     private void OnEnable()
     {
         movementController.OnDirectionChanged += MovementControllerOnDirectionChanged;
+        GameManager.OnPowerPillCollected += GameManagerOnPowerPillCollected;
+        GameManager.OnPowerPillExpired += GameManagerOnPowerPillExpired;
     }
 
     private void OnDisable()
     {
         movementController.OnDirectionChanged -= MovementControllerOnDirectionChanged;
+        GameManager.OnPowerPillCollected -= GameManagerOnPowerPillCollected;
+        GameManager.OnPowerPillExpired -= GameManagerOnPowerPillExpired;
     }
 
     private void MovementControllerOnDirectionChanged(MovementController.MoveDirection direction)
@@ -70,5 +81,29 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    
+    private void GameManagerOnPowerPillExpired()
+    {
+        powerPillAcvtive = false;
+    }
+
+    private void GameManagerOnPowerPillCollected()
+    {
+        powerPillAcvtive = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Ghost")
+        {
+            if (powerPillAcvtive)
+            {
+                OnGhostEaten?.Invoke(collision.GetComponent<GhostController>());
+            }
+            else
+            {
+                desiredDirection = MovementController.MoveDirection.Stopped;
+                OnPacmanEaten?.Invoke();
+            }
+        }
+    }
 }

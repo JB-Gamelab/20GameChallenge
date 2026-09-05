@@ -12,18 +12,25 @@ public abstract class GhostBehaviour : MonoBehaviour
       public GhostState ghostState;
      
       public abstract Vector3Int GetTargetTile(GhostState state);
+      public abstract float GetGhostSpeed(GhostState state);
       public abstract bool StartGhost();
 
       protected virtual void OnEnable()
       {
             GameManager.OnPowerPillCollected += GameManagerOnPowerPillCollected;
             GameManager.OnPowerPillExpired += GameManagerOnPowerPillExpired;
+            PlayerController.OnGhostEaten += GhostEaten;
+            PlayerController.OnPacmanEaten += PacmanEaten;
+            GameManager.OnPacmanRespawn += PacmanRespawn;
       }
 
       protected virtual void OnDisable()
       {
             GameManager.OnPowerPillCollected -= GameManagerOnPowerPillCollected;
             GameManager.OnPowerPillExpired -= GameManagerOnPowerPillExpired;
+            PlayerController.OnGhostEaten -= GhostEaten;
+            PlayerController.OnPacmanEaten -= PacmanEaten;
+            GameManager.OnPacmanRespawn -= PacmanRespawn;
       }
 
       private void Start()
@@ -117,6 +124,24 @@ public abstract class GhostBehaviour : MonoBehaviour
       }
 
       private void GameManagerOnPowerPillExpired()
+      {
+            ChangeGhostState(GhostState.Chasing);
+      }
+
+      private void GhostEaten(GhostController eatenGhost)
+      {
+            if (eatenGhost == this.GetComponent<GhostController>())
+            {
+                  ChangeGhostState(GhostState.Eaten);
+            }
+      }
+
+      private void PacmanEaten()
+      {
+            ChangeGhostState(GhostState.Scattering);
+      }
+
+      private void PacmanRespawn()
       {
             ChangeGhostState(GhostState.Chasing);
       }
