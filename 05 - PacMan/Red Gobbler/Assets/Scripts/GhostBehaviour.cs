@@ -109,7 +109,7 @@ public abstract class GhostBehaviour : MonoBehaviour
             return nextCell;
       }
 
-      private void ChangeGhostState(GhostState state)
+      public void ChangeGhostState(GhostState state)
       {
             if (ghostState == state)
                   return;
@@ -152,6 +152,7 @@ public abstract class GhostBehaviour : MonoBehaviour
             Chasing,
             Scattering,
             Scared,
-            Eaten
+            Eaten,
+            Dead
       }
 }

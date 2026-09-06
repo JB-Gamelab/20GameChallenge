@@ -47,6 +47,9 @@ public class BlueGhostBehaviour : GhostBehaviour
 
             case GhostState.Scared:
             return Vector3Int.RoundToInt(cornerTransform.position);
+
+            case GhostState.Dead:
+            return Vector3Int.RoundToInt(transform.position);
         }
 
         return Vector3Int.zero;

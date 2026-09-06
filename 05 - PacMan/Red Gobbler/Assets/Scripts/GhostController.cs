@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -6,8 +7,10 @@ public class GhostController : MonoBehaviour
 {
     [SerializeField] private Tilemap intersectionTileMap;
     [SerializeField] private Tilemap floorTileMap;
+    [SerializeField] private Tilemap ghostSpawnTileMap;
+    [SerializeField] private float spawnDelay = 2;
     private GhostBehaviour ghostBehaviour;
-
+    private GhostSpriteController spriteController;
     private MovementController movementController;
 
     private MovementController.MoveDirection currentDirection;
@@ -17,6 +20,7 @@ public class GhostController : MonoBehaviour
     private Vector3Int ghostCellPosition;
 
     private bool isScared = false;
+    private bool isEaten = false;
 
     private void Awake()
     {
@@ -26,6 +30,7 @@ public class GhostController : MonoBehaviour
             Debug.Log("No behaviour AI attached");   
         }
         movementController = GetComponent<MovementController>();
+        spriteController = GetComponent<GhostSpriteController>();
     }
 
     private void OnEnable()
@@ -63,6 +68,16 @@ public class GhostController : MonoBehaviour
         else
         {
             isScared = false;
+        }
+
+        if (ghostState == GhostBehaviour.GhostState.Eaten)
+        {
+            isEaten = true;
+            isScared = false;
+        }
+        else
+        {
+            isEaten = false;
         }
 
         currentState = ghostState;
@@ -112,6 +127,13 @@ public class GhostController : MonoBehaviour
                 desiredDirection = currentDirection;
                 movementController.Move(desiredDirection);
             }
+
+            if (isEaten && ghostSpawnTileMap.HasTile(ghostCellPosition))
+            {                
+                ghostBehaviour.ChangeGhostState(GhostBehaviour.GhostState.Dead);
+                movementController.Move(MovementController.MoveDirection.Stopped);
+                StartCoroutine(SpawnTimer());
+            }
         }
         else
         {
@@ -123,9 +145,13 @@ public class GhostController : MonoBehaviour
 
     private void MovementControllerOnDirectionChanged(MovementController.MoveDirection direction)
     {
+        Debug.Log(direction);
         if (direction == MovementController.MoveDirection.Stopped)
         {
-            MoveCheck();
+            if (!isEaten)
+            {
+                Debug.Log("Test");
+            }
         } else
         {
             currentDirection = movementController.GetCurrentMoveDirection();
@@ -138,5 +164,12 @@ public class GhostController : MonoBehaviour
         {
             movementController.Move(desiredDirection);
         }
+    }
+
+    private IEnumerator SpawnTimer()
+    {
+        yield return new WaitForSeconds(spawnDelay);
+        ghostBehaviour.ChangeGhostState(GhostBehaviour.GhostState.Chasing);
+        spriteController.GhostNormal();
     }
 }
