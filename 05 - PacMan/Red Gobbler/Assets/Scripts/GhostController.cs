@@ -145,12 +145,11 @@ public class GhostController : MonoBehaviour
 
     private void MovementControllerOnDirectionChanged(MovementController.MoveDirection direction)
     {
-        Debug.Log(direction);
         if (direction == MovementController.MoveDirection.Stopped)
         {
             if (!isEaten)
             {
-                Debug.Log("Test");
+                MoveCheck();
             }
         } else
         {
@@ -170,6 +169,5 @@ public class GhostController : MonoBehaviour
     {
         yield return new WaitForSeconds(spawnDelay);
         ghostBehaviour.ChangeGhostState(GhostBehaviour.GhostState.Chasing);
-        spriteController.GhostNormal();
     }
 }

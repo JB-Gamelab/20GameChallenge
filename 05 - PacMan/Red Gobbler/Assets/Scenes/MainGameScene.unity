@@ -14557,6 +14557,18 @@ PrefabInstance:
       propertyPath: ghostSprite
       value: 
       objectReference: {fileID: 21300000, guid: a111fb772f328594d834abd2a7730f42, type: 3}
+    - target: {fileID: 7323192638159368952, guid: 09a713c8f1b149f41bfdf7c9d1ca4f68, type: 3}
+      propertyPath: scaredSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 84e4648191ae5a04ba0a3af06d5c1607, type: 3}
+    - target: {fileID: 7323192638159368952, guid: 09a713c8f1b149f41bfdf7c9d1ca4f68, type: 3}
+      propertyPath: flashMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 07c11d0b858885e4cab1fb2f2fbbd3e2, type: 2}
+    - target: {fileID: 7323192638159368952, guid: 09a713c8f1b149f41bfdf7c9d1ca4f68, type: 3}
+      propertyPath: normalMaterial
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -7,34 +7,29 @@ public class GhostSpriteController : MonoBehaviour
 {
     [SerializeField] private Sprite ghostSprite;
     [SerializeField] private Sprite eyeSprite;
+    [SerializeField] private Sprite scaredSprite;
 
     private SpriteRenderer ghostSpriteRenderer;
     private MovementController movementController;
+    private GhostBehaviour ghostBehaviour;
 
     private void Awake()
     {
         movementController = GetComponent<MovementController>();
+        ghostBehaviour = GetComponent<GhostBehaviour>();
+        ghostSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void OnEnable()
     {
         movementController.OnDirectionChanged += MovementControllerOnDirectionChanged;
-        PlayerController.OnGhostEaten += GhostEaten;
-        GameManager.OnPowerPillCollected += GhostScared;
-        GameManager.OnPowerPillExpired += GhostNormal;        
+        ghostBehaviour.OnStateChanged += GhostStateChange;
     }
 
     private void OnDisable()
     {
         movementController.OnDirectionChanged -= MovementControllerOnDirectionChanged;
-        PlayerController.OnGhostEaten -= GhostEaten;
-        GameManager.OnPowerPillCollected -= GhostScared;
-        GameManager.OnPowerPillExpired -= GhostNormal;
-    }
-
-    private void Start()
-    {
-        ghostSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        ghostBehaviour.OnStateChanged -= GhostStateChange;
     }
 
     private void MovementControllerOnDirectionChanged(MovementController.MoveDirection direction)
@@ -58,14 +53,19 @@ public class GhostSpriteController : MonoBehaviour
         }
     }
 
-    private void GhostScared()
+    private void GhostStateChange(GhostBehaviour.GhostState ghostState)
     {
-        //activate flash here
-    }
-
-    public void GhostNormal()
-    {
-        //deactivate flash here
-        ghostSpriteRenderer.sprite = ghostSprite;
+        if (ghostState == GhostBehaviour.GhostState.Eaten)
+        {
+            ghostSpriteRenderer.sprite = eyeSprite;
+        } 
+        else if (ghostState == GhostBehaviour.GhostState.Scared)
+        {
+            ghostSpriteRenderer.sprite = scaredSprite;
+        }
+        else
+        {
+            ghostSpriteRenderer.sprite = ghostSprite;
+        }
     }
 }

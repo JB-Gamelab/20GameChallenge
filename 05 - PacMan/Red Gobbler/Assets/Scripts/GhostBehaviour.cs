@@ -125,7 +125,10 @@ public abstract class GhostBehaviour : MonoBehaviour
 
       private void GameManagerOnPowerPillExpired()
       {
-            ChangeGhostState(GhostState.Chasing);
+            if (ghostState != GhostState.Eaten)
+            {
+                  ChangeGhostState(GhostState.Chasing);
+            }
       }
 
       private void GhostEaten(GhostController eatenGhost)
